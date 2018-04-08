@@ -319,10 +319,10 @@ bool cmp(CARD a, CARD b)//对卡的优先级进行排序
 }
 void delayBaojuTime()//隔开宝具时间
 {
-	POINT dectNode;//特定颜色值的一点，为回合的'回'字的位置
+	POINT dectNode;//特定颜色值的一点
 	dectNode.x = 730;
 	dectNode.y = 47;
-	Sleep(5000);//隔开反应时间
+	Sleep(5500);//隔开反应时间
 	//COLORREF cl = RGB(118, 219, 220);
 	while (1)
 	{
@@ -335,7 +335,7 @@ void delayBaojuTime()//隔开宝具时间
 			break;
 		else if (abs(cl.R - 113) <= 5 && abs(cl.G - 130) <= 5 && abs(cl.B - 164) <= 5)
 			break;
-		Sleep(500);
+		Sleep(200);
 	}
 }
 int attack()//进行常规选取三张卡进行一次攻击
@@ -486,9 +486,11 @@ void eatApple()
 	moveto(yesPos);
 	leftclick();
 	Sleep(2000);
+	/*
 	moveto(startPos);
 	leftclick();
 	Sleep(2000);
+	*/
 }
 void startBattle()//开始战斗
 {

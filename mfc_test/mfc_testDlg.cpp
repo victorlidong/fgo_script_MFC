@@ -301,7 +301,7 @@ void Cmfc_testDlg::OnBnClickedOk()
 	
 	int eventFlag;
 	GetDlgItem(IDC_EDIT41)->GetWindowText(tmp);
-	eventFlag = _ttoi(tmp);
+	eventFlag = __ttoi(tmp);
 
 	init();
 	while (times--)
