@@ -29,7 +29,7 @@ POINT startBattlePos;//¿ªÊ¼Õ½¶·°´Å¥Î»ÖÃ
 POINT helpPos;//µÚÒ»¸öÖúÕ½Î»ÖÃ
 
 POINT Masterskillpos[5];//ÓùÖ÷¼¼ÄÜÎ»ÖÃ£¬0ÎªÓùÖ÷¼¼ÄÜÎ»ÖÃ£¬1 2 3 Îª3¸ö¼¼ÄÜ·Ö±ğµÄÎ»ÖÃ
-POINT cardDect[6][2];//¶ÔÓÚÃ¿ÕÅ¿¨£¬Ñ¡È¡Á½¸öÏñËØµã½øĞĞÅĞ¶Ï¿¨µÄÊôĞÔ
+POINT cardDect[6][3];//¶ÔÓÚÃ¿ÕÅ¿¨£¬Ñ¡È¡Á½¸öÏñËØµã½øĞĞÅĞ¶Ï¿¨µÄÊôĞÔ
 
 POINT goldApplePos;//½ğÆ»¹ûÎ»ÖÃ
 POINT yesPos;//³ÔÆ»¹ûÊÇÈ·¶¨¼üÎ»ÖÃ
@@ -81,23 +81,28 @@ void init()//³õÊ¼»¯
 	baojuPos[2].x = 485; baojuPos[2].y = 201;
 	baojuPos[3].x = 674; baojuPos[3].y = 201;
 
-	attackPos.x = 853; attackPos.y = 449;
+	attackPos.x = 852; attackPos.y = 425;
 	attackColor = RGB(2, 233, 249);//attackµÄÑÕÉ«¸³Öµ
 
 	cardDect[1][0].x = 747; cardDect[1][0].y = 468;
 	cardDect[1][1].x = 724; cardDect[1][1].y = 398;
+	cardDect[1][2].x = 734; cardDect[1][2].y = 402;//
 
 	cardDect[2][0].x = 768; cardDect[2][0].y = 422;
 	cardDect[2][1].x = 773; cardDect[2][1].y = 349;
+	cardDect[2][2].x = 780; cardDect[2][2].y = 357;
 
 	cardDect[3][0].x = 800; cardDect[3][0].y = 395;
 	cardDect[3][1].x = 833; cardDect[3][1].y = 329;
+	cardDect[3][2].x = 836; cardDect[3][2].y = 340;//
 
 	cardDect[4][0].x = 842; cardDect[4][0].y = 379;
 	cardDect[4][1].x = 902; cardDect[4][1].y = 336;
+	cardDect[4][2].x = 900; cardDect[4][2].y = 348;//
 
 	cardDect[5][0].x = 892; cardDect[5][0].y = 387;
 	cardDect[5][1].x = 960; cardDect[5][1].y = 365;
+	cardDect[5][2].x = 956; cardDect[5][2].y = 375;//
 
 	Masterskillpos[0].x = 897; Masterskillpos[0].y = 274;
 	Masterskillpos[1].x = 679; Masterskillpos[1].y = 274;
@@ -237,7 +242,7 @@ void getCardinfo()//»ñµÃÃ¿ÕÅ¿¨µÄÀàĞÍ
 	for (int i = 1; i <= 5; i++)
 	{
 		card[i].id = i;
-		for (int j = 0; j <= 1; j++)
+		for (int j = 0; j <= 2; j++)
 		{
 			if (j == 0)
 			{
@@ -280,27 +285,27 @@ void getCardinfo()//»ñµÃÃ¿ÕÅ¿¨µÄÀàĞÍ
 
 				}
 			}
-			else
+			else if (j == 1)
 			{
 				COLORREF tmp = getColor(cardDect[i][j]);
 				ColorRGB cl = getRGB(tmp);
+				cout << "R=" << cl.R << " " << "G=" << cl.G << " B=" << cl.B << endl;
 				if (cl.R >= 100 && cl.G <= 50 && cl.B <= 50)//¿ËÖÆ
 				{
 					card[i].isWeak = 1;
-					/*	cout << "µÚ" << i << "ÕÅ¿¨ÊÇ" << "¿ËÖÆ" << endl;
-					cout << "----------------------------------------------------" << endl;*/
+					cout << "µÚ" << i << "ÕÅ¿¨ÊÇ" << "¿ËÖÆ" << endl;
+
 				}
-				else if (cl.B >= 100 && cl.R <= 50 && cl.G <= 50)//±»¿ËÖÆ,Õâ¸öÓĞÍ¦´ó¸ÅÂÊÊÇ²â²»³öÀ´µÄ£¬´ıĞŞÕı
+			}
+			else if (j == 2 && card[i].isWeak != 1)
+			{
+				COLORREF tmp = getColor(cardDect[i][j]);
+				ColorRGB cl = getRGB(tmp);
+				cout << "R=" << cl.R << " " << "G=" << cl.G << " B=" << cl.B << endl;
+				if (cl.B >= 100 && cl.R <= 60 && cl.G <= 60 )//±»¿ËÖÆ
 				{
 					card[i].isWeak = -1;
-					/*	cout << "µÚ" << i << "ÕÅ¿¨ÊÇ" << "±»¿ËÖÆ" << endl;
-					cout << "----------------------------------------------------" << endl;*/
-				}
-				else
-				{
-					card[i].isWeak = 0;
-					/*	cout << "µÚ" << i << "ÕÅ¿¨ÊÇ" << "ÆÕÍ¨" << endl;
-					cout << "----------------------------------------------------" << endl;*/
+					cout << "µÚ" << i << "ÕÅ¿¨ÊÇ" << "±»¿ËÖÆ" << endl;
 				}
 			}
 		}
@@ -372,10 +377,11 @@ int attack(int k)//Ñ¡È¡µÚi¸ö±¦¾ß½øĞĞÒ»´Î¹¥»÷,²»ÄÜÒ»´ÎÑ¡ÔñÁ½¸ö£¬´ıÍêÉÆ
 	delayBaojuTime();
 	return 0;
 }
-bool isNewBattle()//Í¨¹ıºÚÆÁÅĞ¶ÏÊÇ·ñÒÑ¾­´òÍêÕâ¹Ø
+bool isNewBattle()//Í¨¹ıºÚÆÁÅĞ¶ÏÊÇ·ñÒÑ¾­´òÍêÕâ¹Ø.ÅĞ¶ÏÎ»ÖÃÔÚ
 {
 	POINT tmp;
-	tmp.x = 63; tmp.y = 142;
+	tmp.x = 730;
+	tmp.y = 47;
 	if (getColor(tmp) == 0)
 		return true;
 	return false;
@@ -395,7 +401,7 @@ bool isAttackButton()//ÅĞ¶Ïattack°´Å¥ÊÇ·ñ³öÏÖ
 {
 	ColorRGB tmp = getRGB(getColor(attackPos));
 	cout << tmp.R << " " << tmp.G << " " << tmp.B << endl;
-	if (abs(tmp.R - 2) <= 15 && abs(tmp.G - 233) <= 15 && abs(tmp.B - 249) <= 15)
+	if (abs(tmp.R - 253) <= 1 && abs(tmp.G - 253) <= 1 && abs(tmp.B - 253) <= 1)
 		return true;
 	return false;
 }
@@ -555,7 +561,7 @@ void Event(int flag)//Èç¹ûÓĞ»î¶¯£¬-1²»Ö´ĞĞ²Ù×÷£¬0£¬²»Ñ¡ÔñÄ£¾ß£¬1 2 3 4 Ñ¡ÔñµÚ¼¸¸
 		leftclick();
 	}
 }
-void onBattle(int info[4][20],int eventFlag)//´¦ÀíÕû¸ö¸±±¾µÄÁ÷³Ì
+void onBattle(int info[4][20],int eventFlag,int turns)//´¦ÀíÕû¸ö¸±±¾µÄÁ÷³Ì
 {
 	
 	int flag1 = 0, flag2 = 0, flag3 = 0;
@@ -607,52 +613,56 @@ void onBattle(int info[4][20],int eventFlag)//´¦ÀíÕû¸ö¸±±¾µÄÁ÷³Ì
 	}
 	cout << "µÚÒ»¹Ø½áÊø" << endl;
 	/*--------------------------------------------------------------------------------*/
+
 	/*---µÚ¶ş¹Ø------*/
-	waitForAttack();
-	/*Ê¹ÓÃ¼¼ÄÜ£¬·Å±¦¾ß*/
-	for (int i = 1; i < 10; i++)
+	if (turns == 3)
 	{
-		if (info[2][i] == 0)
-			useSkill(i);
-		else if (info[2][i]>0)
-			useSkill(i, info[2][i]);
-	}
-
-	for (int i = 11; i <= 13; i++)
-	{
-		if (info[2][i] == 0)
-			useMasterSkill(i - 10);
-		else if (info[2][i] > 0)
-			useMasterSkill(i - 10, info[2][i]);
-	}
-
-
-	if (info[2][10] > 0)
-		attack(info[2][10]);
-	else attack();
-	/*Ê¹ÓÃ¼¼ÄÜ,·Å±¦¾ß*/
-
-	while (!isNewBattle())//ÅĞ¶ÏÓĞÃ»ÓĞ´òÍê,ÊÇ·ñĞèÒªÆ½¿³
-	{
-		cout << "µÚ¶ş¹ØµÈ´ı" << endl;
-		Sleep(200);
-		if (isAttackButton())
+		waitForAttack();
+		/*Ê¹ÓÃ¼¼ÄÜ£¬·Å±¦¾ß*/
+		for (int i = 1; i < 10; i++)
 		{
-			flag2 = 1;
-			break;
+			if (info[2][i] == 0)
+				useSkill(i);
+			else if (info[2][i] > 0)
+				useSkill(i, info[2][i]);
 		}
-	}
-	if (flag2)
-	{
-		while (isAttackButton())
+
+		for (int i = 11; i <= 13; i++)
 		{
-			cout << "µÚ¶ş¹ØÆ½¿³" << endl;
-			attack();
-			while (!isNewBattle() && !isAttackButton())//ÅĞ¶ÏÓĞÃ»ÓĞ´òÍê
-				Sleep(200);
+			if (info[2][i] == 0)
+				useMasterSkill(i - 10);
+			else if (info[2][i] > 0)
+				useMasterSkill(i - 10, info[2][i]);
 		}
+
+
+		if (info[2][10] > 0)
+			attack(info[2][10]);
+		else attack();
+		/*Ê¹ÓÃ¼¼ÄÜ,·Å±¦¾ß*/
+
+		while (!isNewBattle())//ÅĞ¶ÏÓĞÃ»ÓĞ´òÍê,ÊÇ·ñĞèÒªÆ½¿³
+		{
+			cout << "µÚ¶ş¹ØµÈ´ı" << endl;
+			Sleep(200);
+			if (isAttackButton())
+			{
+				flag2 = 1;
+				break;
+			}
+		}
+		if (flag2)
+		{
+			while (isAttackButton())
+			{
+				cout << "µÚ¶ş¹ØÆ½¿³" << endl;
+				attack();
+				while (!isNewBattle() && !isAttackButton())//ÅĞ¶ÏÓĞÃ»ÓĞ´òÍê
+					Sleep(200);
+			}
+		}
+		cout << "µÚ¶ş¹Ø½áÊø" << endl;
 	}
-	cout << "µÚ¶ş¹Ø½áÊø" << endl;
 	/*--------------------------------------------------------------------------------*/
 	/*---µÚÈı¹Ø------*/
 	waitForAttack();
