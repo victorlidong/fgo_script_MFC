@@ -306,12 +306,17 @@ void Cmfc_testDlg::OnBnClickedOk()
 	int turns;
 	GetDlgItem(IDC_EDIT42)->GetWindowText(tmp);
 	turns = __ttoi(tmp);
+	
+	int appFlag;
+	GetDlgItem(IDC_EDIT43)->GetWindowText(tmp);
+	appFlag= __ttoi(tmp);
+
 
 	init();
 	while (times--)
 	{
 		Sleep(1000);
-		onBattle(Info,eventFlag,turns);
+		onBattle(Info,eventFlag,turns,appFlag);
 	}
 	
 

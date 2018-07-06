@@ -70,6 +70,9 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
+    <PostBuildEvent>
+      <Command>editbin   /SUBSYSTEM:CONSOLE   $(OUTDIR)\mfc_test.exe</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -126,6 +129,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\mfc_test.ico" />
+    <Image Include="res\saber.bmp" />
+    <Image Include="res\saber.ico" />
+    <Image Include="res\saber.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

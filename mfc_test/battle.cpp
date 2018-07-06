@@ -32,6 +32,8 @@ POINT Masterskillpos[5];//ÓùÖ÷¼¼ÄÜÎ»ÖÃ£¬0ÎªÓùÖ÷¼¼ÄÜÎ»ÖÃ£¬1 2 3 Îª3¸ö¼¼ÄÜ·Ö±ğµÄÎ»
 POINT cardDect[6][3];//¶ÔÓÚÃ¿ÕÅ¿¨£¬Ñ¡È¡Á½¸öÏñËØµã½øĞĞÅĞ¶Ï¿¨µÄÊôĞÔ
 
 POINT goldApplePos;//½ğÆ»¹ûÎ»ÖÃ
+POINT sliverApplePos;//ÒøÆ»¹û
+POINT bronzeApplePos;//Í­Æ»¹û
 POINT yesPos;//³ÔÆ»¹ûÊÇÈ·¶¨¼üÎ»ÖÃ
 POINT startPos;//´òµÄ±¾µÄÎ»ÖÃ£¬Õâ¸ö»á±ä,¸ù¾İÒª´òÄÄ¸ö±¾¶ø¶¨
 
@@ -117,6 +119,8 @@ void init()//³õÊ¼»¯
 	startBattlePos.x = 889; startBattlePos.y = 541;
 
 	goldApplePos.x = 500; goldApplePos.y = 268;
+	sliverApplePos.x = 475; sliverApplePos.y = 376;
+	bronzeApplePos.x = 475; bronzeApplePos.y = 461;
 	yesPos.x = 635; yesPos.y = 455;
 
 	skillCancelPos.x = 263; skillCancelPos.y = 356;
@@ -484,9 +488,18 @@ void battleEnd()//³öÏÖÁËÕ½¶·½áÊøÖ®ºóÓ¦¸Ã×öµÄ
 	while (isNewBattle())//Ò»Ö±µÈµ½ºÚÆÁ½áÊø
 		Sleep(200);
 }
-void eatApple()
+void eatApple(int appFlag)
 {
-	moveto(goldApplePos);
+	if (appFlag == 2)
+	{
+		moveto(bronzeApplePos);
+	}
+	else if (appFlag == 1)
+	{
+		moveto(sliverApplePos);
+	}
+	else 
+		moveto(goldApplePos);
 	leftclick();
 	Sleep(2000);
 	moveto(yesPos);
@@ -498,7 +511,7 @@ void eatApple()
 	Sleep(2000);
 	*/
 }
-void startBattle()//¿ªÊ¼Õ½¶·
+void startBattle(int appFlag)//¿ªÊ¼Õ½¶·
 {
 	startPos.x = 728;
 	startPos.y = 151;
@@ -510,7 +523,7 @@ void startBattle()//¿ªÊ¼Õ½¶·
 	tmp.x = 803; tmp.y = 209;
 	ColorRGB cl = getRGB(getColor(tmp));
 	if (abs(cl.R - 43) <= 5 && abs(cl.G - 63) <= 5 && abs(cl.B - 98) <= 5)
-		eatApple();
+		eatApple(appFlag);
 	/*-------*/
 	moveto(helpPos);
 	leftclick();
@@ -561,11 +574,11 @@ void Event(int flag)//Èç¹ûÓĞ»î¶¯£¬-1²»Ö´ĞĞ²Ù×÷£¬0£¬²»Ñ¡ÔñÄ£¾ß£¬1 2 3 4 Ñ¡ÔñµÚ¼¸¸
 		leftclick();
 	}
 }
-void onBattle(int info[4][20],int eventFlag,int turns)//´¦ÀíÕû¸ö¸±±¾µÄÁ÷³Ì
+void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//´¦ÀíÕû¸ö¸±±¾µÄÁ÷³Ì
 {
-	
+	cout << Window_X << " " << Window_Y << endl;
 	int flag1 = 0, flag2 = 0, flag3 = 0;
-	startBattle();
+	startBattle(appFlag);
 	/**/
 	Event(eventFlag);
 	/*---µÚÒ»¹Ø------*/

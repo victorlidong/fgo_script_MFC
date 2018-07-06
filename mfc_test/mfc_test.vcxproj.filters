@@ -65,5 +65,14 @@
     <Image Include="res\mfc_test.ico">
       <Filter>资源文件</Filter>
     </Image>
+    <Image Include="res\saber.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\saber.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\saber.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>
