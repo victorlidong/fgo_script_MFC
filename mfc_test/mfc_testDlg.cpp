@@ -13,7 +13,6 @@ using namespace std;
 #define new DEBUG_NEW
 #endif
 
-
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
 class CAboutDlg : public CDialogEx
@@ -66,6 +65,7 @@ BEGIN_MESSAGE_MAP(Cmfc_testDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDCANCEL, &Cmfc_testDlg::OnBnClickedCancel)
 	ON_BN_CLICKED(IDOK, &Cmfc_testDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDOK2, &Cmfc_testDlg::OnBnClickedOk2)
 END_MESSAGE_MAP()
 
 
@@ -311,7 +311,7 @@ void Cmfc_testDlg::OnBnClickedOk()
 	GetDlgItem(IDC_EDIT43)->GetWindowText(tmp);
 	appFlag= __ttoi(tmp);
 
-
+	
 	init();
 	while (times--)
 	{
@@ -320,4 +320,26 @@ void Cmfc_testDlg::OnBnClickedOk()
 	}
 	
 
+}
+
+
+void Cmfc_testDlg::OnBnClickedOk2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	//选择狗粮按键并且翻页
+	
+	for (int i = 0; i < 3; i++)
+	{
+		int x = 126, y = 253;
+		for (int j = 0; j < 5; j++)
+		{
+			moveto(x + j * 144, y + i * 144);
+			leftclick();
+			Sleep(100);
+		}
+	}
+	Sleep(200);
+	leftdown();
+	Sleep(200);
+	leftdown();
 }

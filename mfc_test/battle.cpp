@@ -59,6 +59,7 @@ void init()//初始化
 	GetWindowRect(hq, &rect);
 	Window_X = rect.left;
 	Window_Y = rect.top;
+	std::cout << Window_X << " " << Window_Y << std::endl;
 	skill[1].x = 57;  skill[1].y = 471;
 	skill[2].x = 126;  skill[2].y = 471;
 	skill[3].x = 193;  skill[3].y = 471;
@@ -178,7 +179,7 @@ void leftdown()//按住鼠标向上移动
 	moveto(x, y);
 	mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 	Sleep(100);
-	for (y = 400; y > 200; y -= 10)
+	for (y = 400; y > 150; y -= 10)
 	{
 		moveto(x, y);
 		Sleep(20);
