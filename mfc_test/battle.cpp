@@ -339,11 +339,11 @@ void delayBaojuTime()//隔开宝具时间
 		ColorRGB cl = getRGB(getColor(dectNode));
 		cout << cl.R << " " << cl.G << " " << cl.B << endl;
 		cout << "跳过宝具" << endl;
-		if (abs(cl.R - 233) <= 5 && abs(cl.G - 167) <= 5 && abs(cl.B - 150) <= 5)
+		if (abs(cl.R - 133) <= 5 && abs(cl.G - 99) <= 5 && abs(cl.B - 62) <= 5)
 			break;
-		else if (abs(cl.R - 135) <= 5 && abs(cl.G - 93) <= 5 && abs(cl.B - 60) <= 5)
+		else if (abs(cl.R - 106) <= 5 && abs(cl.G - 139) <= 5 && abs(cl.B - 164) <= 5)
 			break;
-		else if (abs(cl.R - 113) <= 5 && abs(cl.G - 130) <= 5 && abs(cl.B - 164) <= 5)
+		else if (abs(cl.R - 229) <= 5 && abs(cl.G - 150) <= 5 && abs(cl.B - 133) <= 5)
 			break;
 		Sleep(200);
 	}

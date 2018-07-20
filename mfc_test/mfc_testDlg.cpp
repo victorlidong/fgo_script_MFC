@@ -7,6 +7,7 @@
 #include "mfc_testDlg.h"
 #include "afxdialogex.h"
 #include "fgo_battle.h"
+#include <fstream>
 #include<string>
 using namespace std;
 #ifdef _DEBUG
@@ -66,6 +67,8 @@ BEGIN_MESSAGE_MAP(Cmfc_testDlg, CDialogEx)
 	ON_BN_CLICKED(IDCANCEL, &Cmfc_testDlg::OnBnClickedCancel)
 	ON_BN_CLICKED(IDOK, &Cmfc_testDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDOK2, &Cmfc_testDlg::OnBnClickedOk2)
+	ON_BN_CLICKED(IDOK3, &Cmfc_testDlg::OnBnClickedOk3)
+	ON_BN_CLICKED(IDOK4, &Cmfc_testDlg::OnBnClickedOk4)
 END_MESSAGE_MAP()
 
 
@@ -171,12 +174,19 @@ int __ttoi(CString s)
 	return _ttoi(s);
 }
 
-
-
-void Cmfc_testDlg::OnBnClickedOk()
+CString IntToCstring(int a)
 {
-	// TODO:  在此添加控件通知处理程序代码
-	int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
+	CString s = NULL;
+	if (a == -1)
+		return s;
+	else
+	{
+		s.Format(_T("%d"), a);
+		return s;
+	}
+}
+void Cmfc_testDlg::getInfo(int Info[4][20], int &eventFlag, int &turns, int &appFlag,int &times)
+{
 	CString tmp;
 	GetDlgItem(IDC_EDIT1)->GetWindowText(tmp);
 	Info[1][1] = __ttoi(tmp);
@@ -294,24 +304,32 @@ void Cmfc_testDlg::OnBnClickedOk()
 
 	GetDlgItem(IDC_EDIT40)->GetWindowText(tmp);
 	Info[3][13] = __ttoi(tmp);
-	int times;//次数
 
 	GetDlgItem(IDC_EDIT31)->GetWindowText(tmp);
 	times = _ttoi(tmp);
-	
-	int eventFlag;
+
+
 	GetDlgItem(IDC_EDIT41)->GetWindowText(tmp);
 	eventFlag = __ttoi(tmp);
 
-	int turns;
+
 	GetDlgItem(IDC_EDIT42)->GetWindowText(tmp);
 	turns = __ttoi(tmp);
-	
-	int appFlag;
-	GetDlgItem(IDC_EDIT43)->GetWindowText(tmp);
-	appFlag= __ttoi(tmp);
 
-	
+	GetDlgItem(IDC_EDIT43)->GetWindowText(tmp);
+	appFlag = __ttoi(tmp);
+
+}
+
+void Cmfc_testDlg::OnBnClickedOk()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
+	int times;//次数
+	int eventFlag;//活动需要在进入副本时选择加成药品时确定
+	int turns;//回合数
+	int appFlag;//苹果flag
+	getInfo(Info, eventFlag, turns, appFlag,times);
 	init();
 	while (times--)
 	{
@@ -342,4 +360,150 @@ void Cmfc_testDlg::OnBnClickedOk2()
 	leftdown();
 	Sleep(200);
 	leftdown();
+}
+
+
+
+void Cmfc_testDlg::OnBnClickedOk3()//读取配置文件
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+
+	// 设置过滤器   
+	TCHAR szFilter[] = _T("文本文件(*.txt)|*.txt|所有文件(*.*)|*.*||");
+	// 构造打开文件对话框   
+	CFileDialog fileDlg(TRUE, _T("txt"), NULL, 0, szFilter, this);
+	CString strFilePath;
+
+	// 显示打开文件对话框   
+	if (IDOK == fileDlg.DoModal())
+	{
+		// 如果点击了文件对话框上的“打开”按钮，则将选择的文件路径显示到编辑框里   
+		strFilePath = fileDlg.GetPathName();
+		SetDlgItemText(IDC_EDIT44, strFilePath);
+		fstream in;
+		in.open(strFilePath, ios::in);
+
+		int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
+		int times;//次数
+		int eventFlag;//活动需要在进入副本时选择加成药品时确定
+		int turns;//回合数
+		int appFlag;//苹果flag
+		getInfo(Info, eventFlag, turns, appFlag, times);
+
+		for (int i = 1; i <= 3; i++)
+		{
+			for (int j = 1; j <= 13; j++)
+			{
+				in >> Info[i][j];
+				in.get();
+			}
+			in.get();
+		}
+		in >> eventFlag; in.get();
+		in >> turns; in.get();
+		in >> appFlag; in.get();
+		in >> times; in.get();
+		in.close();
+
+		
+
+		SetDlgItemText(IDC_EDIT1, IntToCstring(Info[1][1]));
+		SetDlgItemText(IDC_EDIT2, IntToCstring(Info[1][2]));
+		SetDlgItemText(IDC_EDIT3, IntToCstring(Info[1][3]));
+		SetDlgItemText(IDC_EDIT4, IntToCstring(Info[1][4]));
+		SetDlgItemText(IDC_EDIT5, IntToCstring(Info[1][5]));
+		SetDlgItemText(IDC_EDIT6, IntToCstring(Info[1][6]));
+		SetDlgItemText(IDC_EDIT7, IntToCstring(Info[1][7]));
+		SetDlgItemText(IDC_EDIT8, IntToCstring(Info[1][8]));
+		SetDlgItemText(IDC_EDIT9, IntToCstring(Info[1][9]));
+		SetDlgItemText(IDC_EDIT10, IntToCstring(Info[1][10]));
+
+		SetDlgItemText(IDC_EDIT11, IntToCstring(Info[2][1]));
+		SetDlgItemText(IDC_EDIT12, IntToCstring(Info[2][2]));
+		SetDlgItemText(IDC_EDIT13, IntToCstring(Info[2][3]));
+		SetDlgItemText(IDC_EDIT14, IntToCstring(Info[2][4]));
+		SetDlgItemText(IDC_EDIT15, IntToCstring(Info[2][5]));
+		SetDlgItemText(IDC_EDIT16, IntToCstring(Info[2][6]));
+		SetDlgItemText(IDC_EDIT17, IntToCstring(Info[2][7]));
+		SetDlgItemText(IDC_EDIT18, IntToCstring(Info[2][8]));
+		SetDlgItemText(IDC_EDIT19, IntToCstring(Info[2][9]));
+		SetDlgItemText(IDC_EDIT20, IntToCstring(Info[2][10]));
+		
+		SetDlgItemText(IDC_EDIT21, IntToCstring(Info[3][1]));
+		SetDlgItemText(IDC_EDIT22, IntToCstring(Info[3][2]));
+		SetDlgItemText(IDC_EDIT23, IntToCstring(Info[3][3]));
+		SetDlgItemText(IDC_EDIT24, IntToCstring(Info[3][4]));
+		SetDlgItemText(IDC_EDIT25, IntToCstring(Info[3][5]));
+		SetDlgItemText(IDC_EDIT26, IntToCstring(Info[3][6]));
+		SetDlgItemText(IDC_EDIT27, IntToCstring(Info[3][7]));
+		SetDlgItemText(IDC_EDIT28, IntToCstring(Info[3][8]));
+		SetDlgItemText(IDC_EDIT29, IntToCstring(Info[3][9]));
+		SetDlgItemText(IDC_EDIT30, IntToCstring(Info[3][10]));
+
+		SetDlgItemText(IDC_EDIT32, IntToCstring(Info[1][11]));
+		SetDlgItemText(IDC_EDIT35, IntToCstring(Info[1][12]));
+		SetDlgItemText(IDC_EDIT38, IntToCstring(Info[1][13]));
+
+		SetDlgItemText(IDC_EDIT33, IntToCstring(Info[2][11]));
+		SetDlgItemText(IDC_EDIT36, IntToCstring(Info[2][12]));
+		SetDlgItemText(IDC_EDIT39, IntToCstring(Info[2][13]));
+
+		SetDlgItemText(IDC_EDIT34, IntToCstring(Info[3][11]));
+		SetDlgItemText(IDC_EDIT37, IntToCstring(Info[3][12]));
+		SetDlgItemText(IDC_EDIT40, IntToCstring(Info[3][13]));
+
+		SetDlgItemText(IDC_EDIT31, IntToCstring(times));
+		SetDlgItemText(IDC_EDIT41, IntToCstring(eventFlag));
+		SetDlgItemText(IDC_EDIT42, IntToCstring(turns));
+		SetDlgItemText(IDC_EDIT43, IntToCstring(appFlag));
+
+
+	}
+}
+
+
+void Cmfc_testDlg::OnBnClickedOk4()//保存配置文件
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	// 设置过滤器   
+	TCHAR szFilter[] = _T("文本文件(*.txt)|*.txt|Word文件(*.doc)|*.doc|所有文件(*.*)|*.*||");
+	// 构造保存文件对话框   
+	CFileDialog fileDlg(FALSE, _T("doc"), _T("fgo脚本配置"), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter, this);
+	CString strFilePath;
+
+	// 显示保存文件对话框   
+	if (IDOK == fileDlg.DoModal())
+	{
+		// 如果点击了文件对话框上的“保存”按钮，则将选择的文件路径显示到编辑框里   
+		strFilePath = fileDlg.GetPathName();
+		SetDlgItemText(IDC_EDIT45, strFilePath);
+		fstream out;
+		out.open(strFilePath, ios::out);
+
+		int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
+		int times;//次数
+		int eventFlag;//活动需要在进入副本时选择加成药品时确定
+		int turns;//回合数
+		int appFlag;//苹果flag
+		getInfo(Info, eventFlag, turns, appFlag, times);
+		
+		for (int i = 1; i <= 3; i++)
+		{
+			for (int j = 1; j <= 13; j++)
+			{
+				out << Info[i][j];
+				out << " ";
+			}
+			out << endl;
+		}
+		out << eventFlag << endl;
+		out << turns << endl;
+		out << appFlag << endl;
+		out << times << endl;
+		out.close();
+	}
+
+
 }

@@ -33,4 +33,7 @@ public:
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedOk2();
+	afx_msg void OnBnClickedOk3();
+	afx_msg void OnBnClickedOk4();
+	afx_msg void getInfo(int Info[4][20], int &eventFlag, int &turns, int &appFlag, int &times);
 };
