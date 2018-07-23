@@ -13,7 +13,7 @@ using namespace std;
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
+int F2Status = 0;//F1 按键状态
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
 class CAboutDlg : public CDialogEx
@@ -69,6 +69,10 @@ BEGIN_MESSAGE_MAP(Cmfc_testDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK2, &Cmfc_testDlg::OnBnClickedOk2)
 	ON_BN_CLICKED(IDOK3, &Cmfc_testDlg::OnBnClickedOk3)
 	ON_BN_CLICKED(IDOK4, &Cmfc_testDlg::OnBnClickedOk4)
+	ON_BN_CLICKED(IDOK5, &Cmfc_testDlg::OnBnClickedOk5)
+//	ON_WM_APPCOMMAND()
+//ON_WM_KEYDOWN()
+//ON_WM_CHAR()
 END_MESSAGE_MAP()
 
 
@@ -345,21 +349,60 @@ void Cmfc_testDlg::OnBnClickedOk2()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	//选择狗粮按键并且翻页
-	
-	for (int i = 0; i < 3; i++)
+	CString tmp;
+	GetDlgItem(IDC_EDIT46)->GetWindowText(tmp);
+	int num = __ttoi(tmp);//狗粮数目
+	int row_tmp = num % 15 == 0 ? num / 15 : num / 15 + 1;
+	int left_num = num - (num / 15) * 15;
+	for (int k = 1; k <=row_tmp;k++)
 	{
-		int x = 126, y = 253;
-		for (int j = 0; j < 5; j++)
+		if (k == row_tmp&&left_num!=0)
 		{
-			moveto(x + j * 144, y + i * 144);
-			leftclick();
-			Sleep(100);
+				int row = left_num % 5 == 0 ? left_num / 5 : left_num / 5 + 1;
+				int col = left_num % 5 == 0 ? 5 : left_num % 5;
+
+				for (int i = 0; i < row; i++)
+				{
+					int x = 126, y = 253;
+					if (i == row-1)
+					{
+						for (int j = 0; j < col; j++)
+						{
+							moveto(x + j * 144, y + i * 144);
+							leftclick();
+							Sleep(100);
+						}
+					}
+					else
+					{
+						for (int j = 0; j < 5; j++)
+						{
+							moveto(x + j * 144, y + i * 144);
+							leftclick();
+							Sleep(100);
+						}
+					}
+				}
+		}
+		else
+		{
+			//选15个
+			for (int i = 0; i < 3; i++)
+			{
+				int x = 126, y = 253;
+				for (int j = 0; j < 5; j++)
+				{
+					moveto(x + j * 144, y + i * 144);
+					leftclick();
+					Sleep(100);
+				}
+			}
+			Sleep(200);
+			leftdown();
+			Sleep(500);
 		}
 	}
-	Sleep(200);
-	leftdown();
-	Sleep(200);
-	leftdown();
+
 }
 
 
@@ -505,5 +548,43 @@ void Cmfc_testDlg::OnBnClickedOk4()//保存配置文件
 		out.close();
 	}
 
+
+}
+
+void Cmfc_testDlg::OnBnClickedOk5()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	F2Status = 0;
+	CString tmp;
+	GetDlgItem(IDC_EDIT47)->GetWindowText(tmp);
+	int num = __ttoi(tmp);//狗粮数目
+	while (num--)
+	{
+		moveto(670 - 11, 473 - 14);
+		leftclick();
+		Sleep(500);
+		leftclick();
+		moveto(618 - 11, 554 - 14);
+		Sleep(5000);
+		leftclick();
+		Sleep(1500);
+		leftclick();
+		Sleep(1000);
+	}
+}
+
+
+
+BOOL Cmfc_testDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+
+	if (pMsg->wParam == VK_F2)
+	{
+		F2Status = 1;
+		printf("123");
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
 
 }

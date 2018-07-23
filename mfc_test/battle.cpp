@@ -172,14 +172,14 @@ void moveto(POINT p)//移动鼠标，POINT为相对位置
 {
 	SetCursorPos(p.x + Window_X, p.y + Window_Y);
 }
-void leftdown()//按住鼠标向上移动
+void leftdown()//按住鼠标向上移动三个狗粮的垂直距离
 {
 	int x = 490;
-	int y = 400;
+	int y = 481;
 	moveto(x, y);
 	mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-	Sleep(100);
-	for (y = 400; y > 150; y -= 10)
+	Sleep(500);
+	for (; y >= 17; y -= 7)
 	{
 		moveto(x, y);
 		Sleep(20);
