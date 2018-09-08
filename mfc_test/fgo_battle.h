@@ -3,3 +3,4 @@ void init();
 void moveto(int x, int y);
 void leftdown();
 void leftclick();
+bool isEnd();

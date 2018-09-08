@@ -341,7 +341,7 @@ void delayBaojuTime()//隔开宝具时间
 		cout << "跳过宝具" << endl;
 		if (abs(cl.R - 133) <= 5 && abs(cl.G - 99) <= 5 && abs(cl.B - 62) <= 5)
 			break;
-		else if (abs(cl.R - 106) <= 5 && abs(cl.G - 139) <= 5 && abs(cl.B - 164) <= 5)
+		else if (abs(cl.R - 123) <= 5 && abs(cl.G - 151) <= 5 && abs(cl.B - 172) <= 5)
 			break;
 		else if (abs(cl.R - 229) <= 5 && abs(cl.G - 150) <= 5 && abs(cl.B - 133) <= 5)
 			break;
@@ -394,11 +394,11 @@ bool isNewBattle()//通过黑屏判断是否已经打完这关.判断位置在
 bool isEnd()//判断是否出现了战斗结束
 {
 	POINT tmp;
-	tmp.x = 465; tmp.y = 80;
+	tmp.x = 544; tmp.y = 93;
 	ColorRGB k = getRGB(getColor(tmp));
 	cout << k.R << " " << k.G << " " << k.B << endl;
 	COLORREF cl = RGB(246, 247, 255);
-	if (abs(k.R - 246) <= 1 && abs(k.G - 247) <= 1 && abs(k.B - 255) <= 10)
+	if (abs(k.R - 248) <= 1 && abs(k.G - 251) <= 1 && abs(k.B - 251) <= 1)
 		return true;
 	return false;
 }
@@ -526,6 +526,16 @@ void startBattle(int appFlag)//开始战斗
 	if (abs(cl.R - 43) <= 5 && abs(cl.G - 63) <= 5 && abs(cl.B - 98) <= 5)
 		eatApple(appFlag);
 	/*-------*/
+	POINT fPos;//刷新位置
+	fPos.x = 629;
+	fPos.y = 137;
+	moveto(fPos);
+	leftclick();
+	Sleep(800);
+	moveto(yesPos);
+	leftclick();
+	Sleep(1500);
+
 	moveto(helpPos);
 	leftclick();
 	Sleep(2000);
