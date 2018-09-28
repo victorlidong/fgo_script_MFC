@@ -750,3 +750,74 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本
 	cout << "第三关结束" << endl;
 	battleEnd();
 }
+void selectFire(int num)
+{
+	init();
+	int row_tmp = num % 15 == 0 ? num / 15 : num / 15 + 1;
+	int left_num = num - (num / 15) * 15;
+	for (int k = 1; k <= row_tmp; k++)
+	{
+		if (k == row_tmp && left_num != 0)
+		{
+			int row = left_num % 5 == 0 ? left_num / 5 : left_num / 5 + 1;
+			int col = left_num % 5 == 0 ? 5 : left_num % 5;
+
+			for (int i = 0; i < row; i++)
+			{
+				int x = 130, y = 252;
+				if (i == row - 1)
+				{
+					for (int j = 0; j < col; j++)
+					{
+						moveto(x + j * 144, y + i * 144);
+						leftclick();
+						Sleep(100);
+					}
+				}
+				else
+				{
+					for (int j = 0; j < 5; j++)
+					{
+						moveto(x + j * 144, y + i * 144);
+						leftclick();
+						Sleep(100);
+					}
+				}
+			}
+		}
+		else
+		{
+			//选15个
+			for (int i = 0; i < 3; i++)
+			{
+				int x = 130, y = 252 ;
+				for (int j = 0; j < 5; j++)
+				{
+					moveto(x + j * 144, y + i * 144);
+					leftclick();
+					Sleep(100);
+				}
+			}
+			Sleep(200);
+			leftdown();
+			Sleep(500);
+		}
+	}
+}
+void FriendlyPool(int num)
+{
+	init();
+	while (num--)
+	{
+		moveto(619, 457);
+		leftclick();
+		Sleep(500);
+		leftclick();
+		moveto(566, 539);
+		Sleep(5000);
+		leftclick();
+		Sleep(1500);
+		leftclick();
+		Sleep(1000);
+	}
+}

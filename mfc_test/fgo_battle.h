@@ -4,3 +4,5 @@ void moveto(int x, int y);
 void leftdown();
 void leftclick();
 bool isEnd();
+void selectFire(int num);
+void FriendlyPool(int num);

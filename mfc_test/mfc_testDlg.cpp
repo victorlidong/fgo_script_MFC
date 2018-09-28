@@ -7,6 +7,7 @@
 #include "mfc_testDlg.h"
 #include "afxdialogex.h"
 #include "fgo_battle.h"
+#include<thread>
 #include <fstream>
 #include<string>
 using namespace std;
@@ -337,7 +338,8 @@ void Cmfc_testDlg::OnBnClickedOk()
 	init();
 	while (times--)
 	{
-		Sleep(1000);
+		SetDlgItemText(IDC_EDIT31, IntToCstring(times));
+		Sleep(500);
 		onBattle(Info,eventFlag,turns,appFlag);
 	}
 	
@@ -352,56 +354,7 @@ void Cmfc_testDlg::OnBnClickedOk2()
 	CString tmp;
 	GetDlgItem(IDC_EDIT46)->GetWindowText(tmp);
 	int num = __ttoi(tmp);//狗粮数目
-	int row_tmp = num % 15 == 0 ? num / 15 : num / 15 + 1;
-	int left_num = num - (num / 15) * 15;
-	for (int k = 1; k <=row_tmp;k++)
-	{
-		if (k == row_tmp&&left_num!=0)
-		{
-				int row = left_num % 5 == 0 ? left_num / 5 : left_num / 5 + 1;
-				int col = left_num % 5 == 0 ? 5 : left_num % 5;
-
-				for (int i = 0; i < row; i++)
-				{
-					int x = 126, y = 253;
-					if (i == row-1)
-					{
-						for (int j = 0; j < col; j++)
-						{
-							moveto(x + j * 144, y + i * 144);
-							leftclick();
-							Sleep(100);
-						}
-					}
-					else
-					{
-						for (int j = 0; j < 5; j++)
-						{
-							moveto(x + j * 144, y + i * 144);
-							leftclick();
-							Sleep(100);
-						}
-					}
-				}
-		}
-		else
-		{
-			//选15个
-			for (int i = 0; i < 3; i++)
-			{
-				int x = 126, y = 253;
-				for (int j = 0; j < 5; j++)
-				{
-					moveto(x + j * 144, y + i * 144);
-					leftclick();
-					Sleep(100);
-				}
-			}
-			Sleep(200);
-			leftdown();
-			Sleep(500);
-		}
-	}
+	selectFire(num);
 
 }
 
@@ -557,20 +510,8 @@ void Cmfc_testDlg::OnBnClickedOk5()
 	F2Status = 0;
 	CString tmp;
 	GetDlgItem(IDC_EDIT47)->GetWindowText(tmp);
-	int num = __ttoi(tmp);//狗粮数目
-	while (num--)
-	{
-		moveto(670 - 11, 473 - 14);
-		leftclick();
-		Sleep(500);
-		leftclick();
-		moveto(618 - 11, 554 - 14);
-		Sleep(5000);
-		leftclick();
-		Sleep(1500);
-		leftclick();
-		Sleep(1000);
-	}
+	int num = __ttoi(tmp);
+	FriendlyPool(num);
 }
 
 
