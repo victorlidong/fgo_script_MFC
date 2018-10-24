@@ -38,4 +38,5 @@ public:
 	afx_msg void getInfo(int Info[4][20], int &eventFlag, int &turns, int &appFlag, int &times);
 	afx_msg void OnBnClickedOk5();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnEnChangeEdit48();
 };

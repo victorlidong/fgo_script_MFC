@@ -338,12 +338,16 @@ void delayBaojuTime()//¸ô¿ª±¦¾ßÊ±¼ä
 	{
 		ColorRGB cl = getRGB(getColor(dectNode));
 		cout << cl.R << " " << cl.G << " " << cl.B << endl;
+		ColorRGB bronze, silver, gold;
+		bronze.R =134 ; bronze.G = 93; bronze.B=60;
+		silver.R = 113; silver.G = 139; silver.B =163;
+		gold.R = 195; gold.G = 164; gold.B = 102;
 		cout << "Ìø¹ý±¦¾ß" << endl;
-		if (abs(cl.R - 133) <= 5 && abs(cl.G - 99) <= 5 && abs(cl.B - 62) <= 5)
+		if (abs(cl.R - gold.R) <= 5 && abs(cl.G -gold.G) <= 5 && abs(cl.B - gold.B) <= 5)
 			break;
-		else if (abs(cl.R - 123) <= 5 && abs(cl.G - 151) <= 5 && abs(cl.B - 172) <= 5)
+		else if (abs(cl.R - silver.R) <= 5 && abs(cl.G -silver.G) <= 5 && abs(cl.B - silver.B) <= 5)
 			break;
-		else if (abs(cl.R - 229) <= 5 && abs(cl.G - 150) <= 5 && abs(cl.B - 133) <= 5)
+		else if (abs(cl.R - bronze.R) <= 5 && abs(cl.G - bronze.G) <= 5 && abs(cl.B - bronze.B) <= 5)
 			break;
 		Sleep(200);
 	}
@@ -394,11 +398,10 @@ bool isNewBattle()//Í¨¹ýºÚÆÁÅÐ¶ÏÊÇ·ñÒÑ¾­´òÍêÕâ¹Ø.ÅÐ¶ÏÎ»ÖÃÔÚ
 bool isEnd()//ÅÐ¶ÏÊÇ·ñ³öÏÖÁËÕ½¶·½áÊø
 {
 	POINT tmp;
-	tmp.x = 544; tmp.y = 93;
+	tmp.x = 374; tmp.y = 81;
 	ColorRGB k = getRGB(getColor(tmp));
 	cout << k.R << " " << k.G << " " << k.B << endl;
-	COLORREF cl = RGB(246, 247, 255);
-	if (abs(k.R - 248) <= 1 && abs(k.G - 251) <= 1 && abs(k.B - 251) <= 1)
+	if (abs(k.R - 234) <= 1 && abs(k.G - 249) <= 1 && abs(k.B - 249) <= 1)
 		return true;
 	return false;
 }
@@ -415,7 +418,6 @@ void waitForAttack()//ÑÓ³ÙÊ±¼äµ½attack³öÏÖ
 	while (!isAttackButton())
 		Sleep(500);
 }
-
 int isBaojuReady()//ÅÐ¶Ï±¦¾ßÊÇ·ñ×¼±¸£¬Ã»ÓÐÔò·µ»Ø0£¬ÓÐÔò·µ»Ø×îºóÒ»¸ö×¼±¸ºÃµÄ±¦¾ß
 {
 	POINT dect[4][2];
@@ -443,7 +445,6 @@ int isBaojuReady()//ÅÐ¶Ï±¦¾ßÊÇ·ñ×¼±¸£¬Ã»ÓÐÔò·µ»Ø0£¬ÓÐÔò·µ»Ø×îºóÒ»¸ö×¼±¸ºÃµÄ±¦¾ß
 	}
 	return res;
 }
-
 bool isSkillReady(int x)//ÅÐ¶ÏµÚX¸ö¼¼ÄÜcdÊÇ·ñÀäÈ´
 {
 	POINT skillDect[10];//ÓÃÀ´ÅÐ¶Ï¼¼ÄÜcd
@@ -468,7 +469,6 @@ bool isSkillReady(int x)//ÅÐ¶ÏµÚX¸ö¼¼ÄÜcdÊÇ·ñÀäÈ´
 	cout << "µÚ" << x << "¼¼ÄÜ" << "×¼±¸" << endl;
 	return true;
 }
-
 void battleEnd()//³öÏÖÁËÕ½¶·½áÊøÖ®ºóÓ¦¸Ã×öµÄ
 {
 
@@ -585,6 +585,28 @@ void Event(int flag)//Èç¹ûÓÐ»î¶¯£¬-1²»Ö´ÐÐ²Ù×÷£¬0£¬²»Ñ¡ÔñÄ£¾ß£¬1 2 3 4 Ñ¡ÔñµÚ¼¸¸
 		leftclick();
 	}
 }
+void selectEnemy(int i)
+{
+	POINT first, second, third;
+	first.x = 35; first.y = 71;
+	second.x = 220; second.y = 71;
+	third.x = 401; third.y = 71;
+	if (i == 0||i==-1) return;
+	else if (i == 1)
+	{
+		moveto(first);
+	}
+	else if (i == 2)
+	{
+		moveto(second);
+	}
+	else if (i == 3)
+	{
+		moveto(third);
+	}
+	leftclick();
+	Sleep(1000);
+}
 void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//´¦ÀíÕû¸ö¸±±¾µÄÁ÷³Ì
 {
 	cout << Window_X << " " << Window_Y << endl;
@@ -595,6 +617,8 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//´¦ÀíÕû¸ö¸±±¾
 	/*---µÚÒ»¹Ø------*/
 	waitForAttack();
 	/*Ê¹ÓÃ¼¼ÄÜ£¬·Å±¦¾ß*/
+	selectEnemy(info[1][14]);//Ñ¡ÔñµÐÈËÎ»ÖÃ
+
 	for (int i = 1; i < 10; i++)
 	{
 		if (info[1][i] == 0)
@@ -643,6 +667,8 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//´¦ÀíÕû¸ö¸±±¾
 	{
 		waitForAttack();
 		/*Ê¹ÓÃ¼¼ÄÜ£¬·Å±¦¾ß*/
+		selectEnemy(info[2][14]);//Ñ¡ÔñµÐÈËÎ»ÖÃ
+
 		for (int i = 1; i < 10; i++)
 		{
 			if (info[2][i] == 0)
@@ -691,6 +717,8 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//´¦ÀíÕû¸ö¸±±¾
 	/*---µÚÈý¹Ø------*/
 	waitForAttack();
 	/*Ê¹ÓÃ¼¼ÄÜ£¬·Å±¦¾ß*/
+	selectEnemy(info[3][14]);//Ñ¡ÔñµÐÈËÎ»ÖÃ
+
 	for (int i = 1; i < 10; i++)
 	{
 		if (info[3][i] == 0)

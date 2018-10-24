@@ -74,6 +74,7 @@ BEGIN_MESSAGE_MAP(Cmfc_testDlg, CDialogEx)
 //	ON_WM_APPCOMMAND()
 //ON_WM_KEYDOWN()
 //ON_WM_CHAR()
+ON_EN_CHANGE(IDC_EDIT48, &Cmfc_testDlg::OnEnChangeEdit48)
 END_MESSAGE_MAP()
 
 
@@ -310,6 +311,15 @@ void Cmfc_testDlg::getInfo(int Info[4][20], int &eventFlag, int &turns, int &app
 	GetDlgItem(IDC_EDIT40)->GetWindowText(tmp);
 	Info[3][13] = __ttoi(tmp);
 
+	GetDlgItem(IDC_EDIT48)->GetWindowText(tmp);
+	Info[1][14] = __ttoi(tmp);
+
+	GetDlgItem(IDC_EDIT49)->GetWindowText(tmp);
+	Info[2][14] = __ttoi(tmp);
+
+	GetDlgItem(IDC_EDIT50)->GetWindowText(tmp);
+	Info[3][14] = __ttoi(tmp);
+
 	GetDlgItem(IDC_EDIT31)->GetWindowText(tmp);
 	times = _ttoi(tmp);
 
@@ -389,7 +399,7 @@ void Cmfc_testDlg::OnBnClickedOk3()//读取配置文件
 
 		for (int i = 1; i <= 3; i++)
 		{
-			for (int j = 1; j <= 13; j++)
+			for (int j = 1; j <= 14; j++)
 			{
 				in >> Info[i][j];
 				in.get();
@@ -454,7 +464,9 @@ void Cmfc_testDlg::OnBnClickedOk3()//读取配置文件
 		SetDlgItemText(IDC_EDIT42, IntToCstring(turns));
 		SetDlgItemText(IDC_EDIT43, IntToCstring(appFlag));
 
-
+		SetDlgItemText(IDC_EDIT48, IntToCstring(Info[1][14]));
+		SetDlgItemText(IDC_EDIT49, IntToCstring(Info[2][14]));
+		SetDlgItemText(IDC_EDIT50, IntToCstring(Info[3][14]));
 	}
 }
 
@@ -487,7 +499,7 @@ void Cmfc_testDlg::OnBnClickedOk4()//保存配置文件
 		
 		for (int i = 1; i <= 3; i++)
 		{
-			for (int j = 1; j <= 13; j++)
+			for (int j = 1; j <= 14; j++)
 			{
 				out << Info[i][j];
 				out << " ";
@@ -528,4 +540,15 @@ BOOL Cmfc_testDlg::PreTranslateMessage(MSG* pMsg)
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
 
+}
+
+
+void Cmfc_testDlg::OnEnChangeEdit48()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，它将不
+	// 发送此通知，除非重写 CDialogEx::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
 }
