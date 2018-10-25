@@ -10,6 +10,7 @@
 #include<thread>
 #include <fstream>
 #include<string>
+#include<iostream>
 using namespace std;
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -559,23 +560,27 @@ void Cmfc_testDlg::OnEnChangeEdit48()
 
 UINT MfcThreadProc(LPVOID lpParam)
 {
-	POINT tar, reStart, tmpOk;
+	POINT tar, reStart, tmpOk, dec;
 	tar.x = 295; tar.y = 376;
-	reStart.x = 864; reStart.y = 255;
-	tmpOk.x = 645; tmpOk.y = 457;
+	reStart.x = 852; reStart.y = 220;
+	tmpOk.x = 637; tmpOk.y = 448;
+	dec.x = 158;
+	dec.y = 353;
 	while (1)
 	{
-		ColorRGB cl = getRGB(getColor(tar));
-		if ((cl.R - 12) <= 1 && (cl.G - 100) <= 1 && (cl.B - 120) <= 1)
+		ColorRGB cl = getRGB(getColor(dec));
+		cout << cl.R << cl.G << cl.B << endl;
+
+		if ((cl.R - 10) <= 5 && (cl.G - 79) <= 5 && (cl.B - 112) <= 5)
 		{
 			moveto(reStart);
 			leftclick();
-			Sleep(500);
+			Sleep(1000);
 			moveto(tmpOk);
 			leftclick();
-			Sleep(500);
+			Sleep(1000);
 			moveto(478, 461);
-			Sleep(500);
+			Sleep(2000);
 			continue;
 		}
 		moveto(tar);
@@ -592,7 +597,9 @@ UINT MfcThreadProc(LPVOID lpParam)
 void Cmfc_testDlg::OnBnClickedOk6()//抽花瓣
 {
 	// TODO: 在此添加控件通知处理程序代码
+	init();
 	CWinThread* MyThread=AfxBeginThread(MfcThreadProc,0);
+	bIsRunning = 1;
 	while (1)
 	{
 		if (bIsRunning==1)
