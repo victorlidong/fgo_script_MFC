@@ -574,13 +574,14 @@ UINT MfcThreadProc(LPVOID lpParam)
 		if ((cl.R - 10) <= 5 && (cl.G - 79) <= 5 && (cl.B - 112) <= 5)
 		{
 			moveto(reStart);
-			leftclick();
 			Sleep(1000);
+			leftclick();
 			moveto(tmpOk);
-			leftclick();
 			Sleep(1000);
+			leftclick();
 			moveto(478, 461);
 			Sleep(2000);
+			leftclick();
 			continue;
 		}
 		moveto(tar);
