@@ -14,9 +14,11 @@ using namespace std;
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-int F2Status = 0;//F1 按键状态
+#define KEY_DOWN(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 1:0)
+int F2Status = 0;//没有用
+int bIsRunning = 1;
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
-
+UINT MfcThreadProc(LPVOID lpParam);
 class CAboutDlg : public CDialogEx
 {
 public:
@@ -75,6 +77,7 @@ BEGIN_MESSAGE_MAP(Cmfc_testDlg, CDialogEx)
 //ON_WM_KEYDOWN()
 //ON_WM_CHAR()
 ON_EN_CHANGE(IDC_EDIT48, &Cmfc_testDlg::OnEnChangeEdit48)
+ON_BN_CLICKED(IDOK6, &Cmfc_testDlg::OnBnClickedOk6)
 END_MESSAGE_MAP()
 
 
@@ -551,4 +554,54 @@ void Cmfc_testDlg::OnEnChangeEdit48()
 	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
 
 	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+UINT MfcThreadProc(LPVOID lpParam)
+{
+	POINT tar, reStart, tmpOk;
+	tar.x = 295; tar.y = 376;
+	reStart.x = 864; reStart.y = 255;
+	tmpOk.x = 645; tmpOk.y = 457;
+	while (1)
+	{
+		ColorRGB cl = getRGB(getColor(tar));
+		if ((cl.R - 12) <= 1 && (cl.G - 100) <= 1 && (cl.B - 120) <= 1)
+		{
+			moveto(reStart);
+			leftclick();
+			Sleep(500);
+			moveto(tmpOk);
+			leftclick();
+			Sleep(500);
+			moveto(478, 461);
+			Sleep(500);
+			continue;
+		}
+		moveto(tar);
+		leftclick();
+		Sleep(500);
+
+		if (bIsRunning == 0)
+			return 0;
+	}
+
+	return 0;
+}
+
+void Cmfc_testDlg::OnBnClickedOk6()//抽花瓣
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CWinThread* MyThread=AfxBeginThread(MfcThreadProc,0);
+	while (1)
+	{
+		if (bIsRunning==1)
+		{
+			if (KEY_DOWN('Q'))
+			{
+				bIsRunning = 0;
+				break;
+			}
+		}
+	}
 }

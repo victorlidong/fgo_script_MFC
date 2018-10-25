@@ -11,8 +11,8 @@
 
 using namespace std;
 #define KEY_DOWN(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 1:0) 
-
-
+int isBaojuReady();
+int baoju[4];
 int Window_X, Window_Y;//为窗口左上角的坐标
 POINT skill[10];//记录9个技能位置
 POINT personPos[5];//记录使用从者技能或者礼装技能时，选择的人的位置
@@ -230,17 +230,49 @@ void useMasterSkill(int k)//使用第k个御主技能
 	leftclick();
 	Sleep(4000);
 }
-void useMasterSkill(int k, int i)//使用第k个御主技能对第i个人
+void useMasterSkill(int k, int i)//使用第k个御主技能对第i个人，当i>10时，视为换人礼装 14即1 4对调
 {
-	moveto(Masterskillpos[0]);
-	leftclick();
-	Sleep(1000);
-	moveto(Masterskillpos[k]);
-	leftclick();
-	Sleep(200);
-	moveto(personPos[i]);
-	leftclick();
-	Sleep(4000);
+	if (i > 10)//换人礼装
+	{
+		int tmp1 = i / 10;
+		int tmp2 = i % 10;
+
+		POINT changePos[7];
+		changePos[1].x =99 ; changePos[1].y = 297;
+		changePos[2].x = 271; changePos[2].y = 297;
+		changePos[3].x = 433; changePos[3].y = 297;
+		changePos[4].x = 575; changePos[4].y = 297;
+		changePos[5].x = 725; changePos[5].y = 297;
+		changePos[6].x = 874; changePos[6].y = 297;
+		moveto(Masterskillpos[0]);
+		leftclick();
+		Sleep(1000);
+		moveto(Masterskillpos[k]);
+		leftclick();
+		Sleep(500);
+		moveto(changePos[tmp1]);
+		leftclick();
+		Sleep(200);
+		moveto(changePos[tmp2]);
+		leftclick();
+		Sleep(200);
+		moveto(485, 505);
+		leftclick();
+
+		Sleep(6000);
+	}
+	else
+	{
+		moveto(Masterskillpos[0]);
+		leftclick();
+		Sleep(1000);
+		moveto(Masterskillpos[k]);
+		leftclick();
+		Sleep(200);
+		moveto(personPos[i]);
+		leftclick();
+		Sleep(4000);
+	}
 }
 void getCardinfo()//获得每张卡的类型
 {
@@ -367,8 +399,14 @@ int attack()//进行常规选取三张卡进行一次攻击
 	}
 	return 0;
 }
-int attack(int k)//选取第i个宝具进行一次攻击,不能一次选择两个，待完善
+int attack(int k)//选取第i个宝具进行一次攻击,不能一次选择两个，待完善,增加宝具充能未满不能放判断
 {
+	isBaojuReady();
+	if (baoju[k] != 1)//宝具未准备
+	{
+		attack();
+		return 0;
+	}
 	getCardinfo();
 	sort(card + 1, card + 6, cmp);
 	moveto(attackPos);
@@ -429,6 +467,7 @@ int isBaojuReady()//判断宝具是否准备，没有则返回0，有则返回最后一个准备好的宝具
 	dect[3][1].x = 602; dect[3][1].y = 545;//226 153 11
 	ColorRGB cl[4][2];
 	int res = 0;
+	for (int i = 1; i <= 3; i++) baoju[i] = 0;
 	for (int i = 1; i <= 3; i++)
 	{
 		cl[i][0] = getRGB(getColor(dect[i][0]));
@@ -441,6 +480,7 @@ int isBaojuReady()//判断宝具是否准备，没有则返回0，有则返回最后一个准备好的宝具
 			if (res == 0)
 				res = i;
 			cout << "第" << i << "个宝具准备" << endl;
+			baoju[i] = 1;
 		}
 	}
 	return res;
@@ -609,6 +649,7 @@ void selectEnemy(int i)
 }
 void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本的流程
 {
+	
 	cout << Window_X << " " << Window_Y << endl;
 	int flag1 = 0, flag2 = 0, flag3 = 0;
 	startBattle(appFlag);

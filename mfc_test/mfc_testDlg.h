@@ -39,4 +39,5 @@ public:
 	afx_msg void OnBnClickedOk5();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnEnChangeEdit48();
+	afx_msg void OnBnClickedOk6();
 };

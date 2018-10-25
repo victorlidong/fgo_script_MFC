@@ -6,3 +6,12 @@ void leftclick();
 bool isEnd();
 void selectFire(int num);
 void FriendlyPool(int num);
+struct ColorRGB
+{
+	int R, G, B;
+};
+ColorRGB getRGB(COLORREF color);
+COLORREF getColor(POINT p);
+void moveto(POINT p);
+void useMasterSkill(int k, int i);
+
