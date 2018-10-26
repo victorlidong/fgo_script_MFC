@@ -181,6 +181,14 @@ int __ttoi(CString s)
 {
 	if (s.IsEmpty())
 		return -1;
+	if (s.GetLength() > 1)//如果长度大于1
+	{
+		if (s[0] == '0')//第一位是0，变成10X
+		{
+			CString tmp("1");
+			s = tmp + s;
+		}
+	}
 	return _ttoi(s);
 }
 
@@ -192,6 +200,10 @@ CString IntToCstring(int a)
 	else
 	{
 		s.Format(_T("%d"), a);
+		if (s.GetLength() == 3)
+		{
+			s = s.Mid(1);
+		}
 		return s;
 	}
 }

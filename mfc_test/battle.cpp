@@ -163,7 +163,6 @@ void leftclick()//此函数模拟鼠标点击
 	Sleep(10);
 	mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 }
-
 void moveto(int x, int y)//移动鼠标，x,y为相对位置
 {
 	SetCursorPos(x + Window_X, y + Window_Y);
@@ -279,6 +278,7 @@ void getCardinfo()//获得每张卡的类型
 	for (int i = 1; i <= 5; i++)
 	{
 		card[i].id = i;
+		card[i].isWeak = 0;
 		for (int j = 0; j <= 2; j++)
 		{
 			if (j == 0)
@@ -660,21 +660,47 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本
 	/*使用技能，放宝具*/
 	selectEnemy(info[1][14]);//选择敌人位置
 
-	for (int i = 1; i < 10; i++)
+	//使用技能，双重循环
+	for (int count = 0; count < 2; count++)
 	{
-		if (info[1][i] == 0)
-			useSkill(i);
-		else if (info[1][i]>0)
-			useSkill(i, info[1][i]);
+		for (int i = 1; i < 10; i++)//9个技能循环
+		{
+			if (info[1][i] < 10)//只循环一次
+			{
+				if (count == 1) continue;//第二轮循环跳过
+				if (info[1][i] == 0)
+					useSkill(i);
+				else if (info[1][i] > 0)
+					useSkill(i, info[1][i]);
+			}
+			else
+			{
+				int round[5], cnt = 0, tmpInfo = info[1][i];
+				while (tmpInfo)
+				{
+					round[cnt++] = tmpInfo % 10;
+					tmpInfo /= 10;
+				}
+				if (round[1 - count] == 0)
+				{
+					useSkill(i);
+				}
+				else if (round[1 - count] > 0)
+				{
+					useSkill(i, round[1 - count]);
+				}
+			}
+			
+		}
+		if (count == 1) break;
+		for (int i = 11; i <= 13; i++)//御主技能循环
+		{
+			if (info[1][i] == 0)
+				useMasterSkill(i - 10);
+			else if (info[1][i] > 0)
+				useMasterSkill(i - 10, info[1][i]);
+		}
 	}
-	for (int i = 11; i <= 13; i++)
-	{
-		if (info[1][i] == 0)
-			useMasterSkill(i - 10);
-		else if (info[1][i] > 0)
-			useMasterSkill(i - 10, info[1][i]);
-	}
-
 	if (info[1][10] > 0)
 		attack(info[1][10]);
 	else attack();
@@ -710,20 +736,46 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本
 		/*使用技能，放宝具*/
 		selectEnemy(info[2][14]);//选择敌人位置
 
-		for (int i = 1; i < 10; i++)
+		//使用技能，双重循环
+		for (int count = 0; count < 2; count++)
 		{
-			if (info[2][i] == 0)
-				useSkill(i);
-			else if (info[2][i] > 0)
-				useSkill(i, info[2][i]);
-		}
+			for (int i = 1; i < 10; i++)//9个技能循环
+			{
+				if (info[2][i] < 10)//只循环一次
+				{
+					if (count == 1) continue;//第二轮循环跳过
+					if (info[2][i] == 0)
+						useSkill(i);
+					else if (info[2][i] > 0)
+						useSkill(i, info[2][i]);
+				}
+				else
+				{
+					int round[5], cnt = 0, tmpInfo = info[2][i];
+					while (tmpInfo)
+					{
+						round[cnt++] = tmpInfo % 10;
+						tmpInfo /= 10;
+					}
+					if (round[1 - count] == 0)
+					{
+						useSkill(i);
+					}
+					else if (round[1 - count] > 0)
+					{
+						useSkill(i, round[1 - count]);
+					}
+				}
 
-		for (int i = 11; i <= 13; i++)
-		{
-			if (info[2][i] == 0)
-				useMasterSkill(i - 10);
-			else if (info[2][i] > 0)
-				useMasterSkill(i - 10, info[2][i]);
+			}
+			if (count == 1) break;
+			for (int i = 11; i <= 13; i++)//御主技能循环
+			{
+				if (info[2][i] == 0)
+					useMasterSkill(i - 10);
+				else if (info[2][i] > 0)
+					useMasterSkill(i - 10, info[2][i]);
+			}
 		}
 
 
@@ -760,20 +812,46 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本
 	/*使用技能，放宝具*/
 	selectEnemy(info[3][14]);//选择敌人位置
 
-	for (int i = 1; i < 10; i++)
+	//使用技能，双重循环
+	for (int count = 0; count < 2; count++)
 	{
-		if (info[3][i] == 0)
-			useSkill(i);
-		else if (info[3][i]>0)
-			useSkill(i, info[3][i]);
-	}
+		for (int i = 1; i < 10; i++)//9个技能循环
+		{
+			if (info[3][i] < 10)//只循环一次
+			{
+				if (count == 1) continue;//第二轮循环跳过
+				if (info[3][i] == 0)
+					useSkill(i);
+				else if (info[3][i] > 0)
+					useSkill(i, info[3][i]);
+			}
+			else
+			{
+				int round[5], cnt = 0, tmpInfo = info[3][i];
+				while (tmpInfo)
+				{
+					round[cnt++] = tmpInfo % 10;
+					tmpInfo /= 10;
+				}
+				if (round[1 - count] == 0)
+				{
+					useSkill(i);
+				}
+				else if (round[1 - count] > 0)
+				{
+					useSkill(i, round[1 - count]);
+				}
+			}
 
-	for (int i = 11; i <= 13; i++)
-	{
-		if (info[3][i] == 0)
-			useMasterSkill(i - 10);
-		else if (info[3][i] > 0)
-			useMasterSkill(i - 10, info[3][i]);
+		}
+		if (count == 1) break;
+		for (int i = 11; i <= 13; i++)//御主技能循环
+		{
+			if (info[3][i] == 0)
+				useMasterSkill(i - 10);
+			else if (info[3][i] > 0)
+				useMasterSkill(i - 10, info[3][i]);
+		}
 	}
 
 
