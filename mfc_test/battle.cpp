@@ -34,6 +34,7 @@ POINT cardDect[6][3];//对于每张卡，选取两个像素点进行判断卡的属性
 POINT goldApplePos;//金苹果位置
 POINT sliverApplePos;//银苹果
 POINT bronzeApplePos;//铜苹果
+POINT stoneApplePos;//圣晶石位置
 POINT yesPos;//吃苹果是确定键位置
 POINT startPos;//打的本的位置，这个会变,根据要打哪个本而定
 
@@ -122,6 +123,7 @@ void init()//初始化
 	goldApplePos.x = 500; goldApplePos.y = 268;
 	sliverApplePos.x = 475; sliverApplePos.y = 376;
 	bronzeApplePos.x = 475; bronzeApplePos.y = 461;
+	stoneApplePos.x = 502; stoneApplePos.y = 186;
 	yesPos.x = 635; yesPos.y = 455;
 
 	skillCancelPos.x = 263; skillCancelPos.y = 356;
@@ -539,8 +541,14 @@ void eatApple(int appFlag)
 	{
 		moveto(sliverApplePos);
 	}
-	else 
+	else if (appFlag == 0)
+	{
 		moveto(goldApplePos);
+	}
+	else if (appFlag == 3)
+	{
+		moveto(stoneApplePos);
+	}
 	leftclick();
 	Sleep(2000);
 	moveto(yesPos);
