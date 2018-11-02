@@ -60,6 +60,9 @@
     <None Include="res\mfc_test.rc2">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="res\wave3.bin">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\mfc_test.ico">

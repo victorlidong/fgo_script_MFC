@@ -7,8 +7,11 @@
 #include <string.h>  
 #include <iostream>  
 #include<string>
+#include"resource.h"
 #include<algorithm>
-
+#include <windows.h>
+#include <mmsystem.h>
+#pragma comment(lib, "WINMM.LIB")
 using namespace std;
 #define KEY_DOWN(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 1:0) 
 int isBaojuReady();
@@ -521,6 +524,7 @@ void battleEnd()//出现了战斗结束之后应该做的
 		if (abs(tmp.R-242)<5&&abs(tmp.G-242)<5&&abs(tmp.B-242)<5)//判断是否掉落礼装
 		{
 			cout << "礼装掉落" << endl;
+			PlaySound(LPWSTR(IDR_WAVE3), GetModuleHandle(NULL), SND_RESOURCE | SND_ASYNC );
 			moveto(ClosePos);
 			leftclick();
 			Sleep(1000);
@@ -657,7 +661,7 @@ void selectEnemy(int i)
 }
 void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本的流程
 {
-	
+	PlaySound(LPWSTR(IDR_WAVE3), GetModuleHandle(NULL), SND_RESOURCE | SND_ASYNC);
 	cout << Window_X << " " << Window_Y << endl;
 	int flag1 = 0, flag2 = 0, flag3 = 0;
 	startBattle(appFlag);

@@ -11,6 +11,9 @@
 #include <fstream>
 #include<string>
 #include<iostream>
+#include <windows.h>
+#include <mmsystem.h>
+#pragma comment(lib, "WINMM.LIB")
 using namespace std;
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -362,6 +365,7 @@ void Cmfc_testDlg::OnBnClickedOk()
 	int appFlag;//Æ»¹ûflag
 	getInfo(Info, eventFlag, turns, appFlag,times);
 	init();
+	//PlaySound(LPWSTR(IDR_WAVE3), GetModuleHandle(NULL), SND_RESOURCE | SND_ASYNC);
 	while (times--)
 	{
 		SetDlgItemText(IDC_EDIT31, IntToCstring(times));

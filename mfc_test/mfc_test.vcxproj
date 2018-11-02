@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\mfc_test.rc2" />
+    <None Include="res\wave3.bin" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\mfc_test.ico" />
