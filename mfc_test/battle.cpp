@@ -661,7 +661,7 @@ void selectEnemy(int i)
 }
 void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本的流程
 {
-	PlaySound(LPWSTR(IDR_WAVE3), GetModuleHandle(NULL), SND_RESOURCE | SND_ASYNC);
+	
 	cout << Window_X << " " << Window_Y << endl;
 	int flag1 = 0, flag2 = 0, flag3 = 0;
 	startBattle(appFlag);
