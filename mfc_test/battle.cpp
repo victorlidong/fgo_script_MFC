@@ -557,7 +557,7 @@ void eatApple(int appFlag)
 	Sleep(2000);
 	moveto(yesPos);
 	leftclick();
-	Sleep(2000);
+	Sleep(3000);
 	/*
 	moveto(startPos);
 	leftclick();
@@ -583,10 +583,10 @@ void startBattle(int appFlag)//开始战斗
 	fPos.y = 137;
 	moveto(fPos);
 	leftclick();
-	Sleep(800);
+	Sleep(1000);
 	moveto(yesPos);
 	leftclick();
-	Sleep(1500);
+	Sleep(3000);
 
 	moveto(helpPos);
 	leftclick();
@@ -688,7 +688,7 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本
 			else
 			{
 				int round[5], cnt = 0, tmpInfo = info[1][i];
-				while (tmpInfo)
+				while (tmpInfo)//字符分割
 				{
 					round[cnt++] = tmpInfo % 10;
 					tmpInfo /= 10;
@@ -699,6 +699,8 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本
 				}
 				else if (round[1 - count] > 0)
 				{
+					if (round[1 - count] >= 4)
+						continue;
 					useSkill(i, round[1 - count]);
 				}
 			}
@@ -775,6 +777,8 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本
 					}
 					else if (round[1 - count] > 0)
 					{
+						if (round[1 - count] >= 4)
+							continue;
 						useSkill(i, round[1 - count]);
 					}
 				}
@@ -851,6 +855,8 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本
 				}
 				else if (round[1 - count] > 0)
 				{
+					if (round[1 - count] >= 4)
+						continue;
 					useSkill(i, round[1 - count]);
 				}
 			}
