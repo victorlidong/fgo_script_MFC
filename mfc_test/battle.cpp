@@ -433,7 +433,7 @@ bool isNewBattle()//通过黑屏判断是否已经打完这关.判断位置在
 {
 	POINT tmp;
 	tmp.x = 730;
-	tmp.y = 47;
+	tmp.y = 200;
 	if (getColor(tmp) == 0)
 		return true;
 	return false;
