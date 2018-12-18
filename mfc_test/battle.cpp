@@ -441,10 +441,15 @@ bool isNewBattle()//通过黑屏判断是否已经打完这关.判断位置在
 bool isEnd()//判断是否出现了战斗结束
 {
 	POINT tmp;
-	tmp.x = 374; tmp.y = 81;
+	//tmp.x = 575; tmp.y = 67;
+	tmp.x = 65; tmp.y = 176;
 	ColorRGB k = getRGB(getColor(tmp));
 	cout << k.R << " " << k.G << " " << k.B << endl;
-	if (abs(k.R - 234) <= 1 && abs(k.G - 249) <= 1 && abs(k.B - 249) <= 1)
+	/*
+	if (abs(k.R - 243) <= 1 && abs(k.G - 253) <= 1 && abs(k.B - 253) <= 1)
+		return true;
+	*/
+	if (abs(k.R - 229) <= 1 && abs(k.G - 187) <= 1 && abs(k.B - 31) <= 1)
 		return true;
 	return false;
 }
