@@ -376,9 +376,9 @@ void delayBaojuTime()//隔开宝具时间
 		ColorRGB cl = getRGB(getColor(dectNode));
 		cout << cl.R << " " << cl.G << " " << cl.B << endl;
 		ColorRGB bronze, silver, gold;
-		bronze.R =134 ; bronze.G = 93; bronze.B=60;
-		silver.R = 113; silver.G = 139; silver.B =163;
-		gold.R = 195; gold.G = 164; gold.B = 102;
+		bronze.R =127 ; bronze.G = 93; bronze.B=60;
+		silver.R = 116; silver.G = 150; silver.B =182;
+		gold.R = 211; gold.G = 139; gold.B = 106;
 		cout << "跳过宝具" << endl;
 		if (abs(cl.R - gold.R) <= 5 && abs(cl.G -gold.G) <= 5 && abs(cl.B - gold.B) <= 5)
 			break;
@@ -429,13 +429,35 @@ int attack(int k)//选取第i个宝具进行一次攻击,不能一次选择两个，待完善,增加宝具充
 	delayBaojuTime();
 	return 0;
 }
-bool isNewBattle()//通过黑屏判断是否已经打完这关.判断位置在
+bool isNewBattle()//通过黑屏判断是否已经打完这关.
 {
 	POINT tmp;
-	tmp.x = 730;
-	tmp.y = 200;
-	if (getColor(tmp) == 0)
+	//tmp.x = 65; tmp.y = 176;
+	//tmp.x = 730; tmp.y = 47;
+	tmp.x = 680; tmp.y = 108;
+	ColorRGB color = getRGB(getColor(tmp));
+	if (color.R == 0 && color.G == 0 && color.B == 0)
+	{
+		cout << "newBettle判断" << endl;
+		cout << color.R << " " << color.G << " " << color.B << endl;
 		return true;
+	}
+	cout << "newBettle判断==false" << endl;
+	return false;
+}
+bool isAllBattleEnd()//通过黑屏判断是否已经打完
+{
+	POINT tmp;
+	tmp.x = 65; tmp.y = 176;
+	//tmp.x = 730; tmp.y = 47;
+	ColorRGB color = getRGB(getColor(tmp));
+	if (color.R == 0 && color.G == 0 && color.B == 0)
+	{
+		cout << "newBettle判断" << endl;
+		cout << color.R << " " << color.G << " " << color.B << endl;
+		return true;
+	}
+	cout << "newBettle判断==false" << endl;
 	return false;
 }
 bool isEnd()//判断是否出现了战斗结束
@@ -445,19 +467,24 @@ bool isEnd()//判断是否出现了战斗结束
 	tmp.x = 65; tmp.y = 176;
 	ColorRGB k = getRGB(getColor(tmp));
 	cout << k.R << " " << k.G << " " << k.B << endl;
-	/*
-	if (abs(k.R - 243) <= 1 && abs(k.G - 253) <= 1 && abs(k.B - 253) <= 1)
-		return true;
-	*/
-	if (abs(k.R - 229) <= 1 && abs(k.G - 187) <= 1 && abs(k.B - 31) <= 1)
+	ColorRGB tmpcl;
+	tmpcl.R = 231; tmpcl.G = 181; tmpcl.B = 45;
+	if (abs(k.R - tmpcl.R) <= 0 && abs(k.G - tmpcl.G) <= 0 && abs(k.B - tmpcl.B) <= 0)
 		return true;
 	return false;
 }
 bool isAttackButton()//判断attack按钮是否出现
 {
+	attackPos.x = 869 - 5;
+	attackPos.y = 454 - 9;
 	ColorRGB tmp = getRGB(getColor(attackPos));
 	cout << tmp.R << " " << tmp.G << " " << tmp.B << endl;
+	/*
+	//对应初始化的点的位置
 	if (abs(tmp.R - 253) <= 1 && abs(tmp.G - 253) <= 1 && abs(tmp.B - 253) <= 1)
+		return true;
+		*/
+	if (abs(tmp.R - 0) <= 1 && abs(tmp.G - 234) <= 1 && abs(tmp.B - 250) <= 1)
 		return true;
 	return false;
 }
@@ -485,7 +512,9 @@ int isBaojuReady()//判断宝具是否准备，没有则返回0，有则返回最后一个准备好的宝具
 		/*cout << cl[i][0].R << " " << cl[i][0].G << " " << cl[i][0].B << endl;
 		cout << cl[i][1].R << " " << cl[i][1].G << " " << cl[i][1].B << endl << endl;*/
 		if ((abs(cl[i][0].R - 219) <= 20 && abs(cl[i][0].G - 219) <= 20 && abs(cl[i][0].B - 219) <= 20) ||
-			(abs(cl[i][1].R - 226) <= 20 && abs(cl[i][1].G - 153) <= 20 && abs(cl[i][1].B - 11) <= 20))
+			(abs(cl[i][1].R - 226) <= 20 && abs(cl[i][1].G - 153) <= 20 && abs(cl[i][1].B - 11) <= 20)||
+			(abs(cl[i][1].R - 246) <= 20 && abs(cl[i][1].G - 231) <= 20 && abs(cl[i][1].B - 125) <= 20)
+			)
 		{
 			if (res == 0)
 				res = i;
@@ -522,7 +551,7 @@ bool isSkillReady(int x)//判断第X个技能cd是否冷却
 void battleEnd()//出现了战斗结束之后应该做的
 {
 
-	while (!isNewBattle())
+	while (!isAllBattleEnd())
 	{
 		moveto(battleEndPos);
 		ColorRGB tmp = getRGB(getColor(ClosePos));
@@ -534,17 +563,20 @@ void battleEnd()//出现了战斗结束之后应该做的
 			leftclick();
 			Sleep(1000);
 		}
+		cout << "战斗结束" << endl;
 		leftclick();
 		Sleep(500);
 	}
-	while (isNewBattle())//一直等到黑屏结束
+	while (isAllBattleEnd())//一直等到黑屏结束
 		Sleep(200);
 }
 void eatApple(int appFlag)
 {
+	printf("appFlag=%d\n", appFlag);
 	if (appFlag == 2)
 	{
 		moveto(bronzeApplePos);
+
 	}
 	else if (appFlag == 1)
 	{
@@ -580,8 +612,11 @@ void startBattle(int appFlag)//开始战斗
 	POINT tmp;
 	tmp.x = 803; tmp.y = 209;
 	ColorRGB cl = getRGB(getColor(tmp));
-	if (abs(cl.R - 43) <= 5 && abs(cl.G - 63) <= 5 && abs(cl.B - 98) <= 5)
+	if (abs(cl.R - 62) <= 5 && abs(cl.G - 116) <= 5 && abs(cl.B - 163) <= 5)
+	{
+		printf("eat apple\n");
 		eatApple(appFlag);
+	}
 	/*-------*/
 	POINT fPos;//刷新位置
 	fPos.x = 629;
