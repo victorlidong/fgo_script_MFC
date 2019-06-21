@@ -263,7 +263,7 @@ void useMasterSkill(int k, int i)// π”√µ⁄k∏ˆ”˘÷˜ººƒ‹∂‘µ⁄i∏ˆ»À£¨µ±i>10 ±£¨ ”Œ™ªª»
 		moveto(485, 505);
 		leftclick();
 
-		Sleep(6000);
+		Sleep(10000);
 	}
 	else
 	{
@@ -404,30 +404,74 @@ int attack()//Ω¯––≥£πÊ—°»°»˝’≈ø®Ω¯––“ª¥Œπ•ª˜
 	}
 	return 0;
 }
-int attack(int k)//—°»°µ⁄i∏ˆ±¶æﬂΩ¯––“ª¥Œπ•ª˜,≤ªƒ‹“ª¥Œ—°‘Ò¡Ω∏ˆ£¨¥˝ÕÍ…∆,‘ˆº”±¶æﬂ≥‰ƒ‹Œ¥¬˙≤ªƒ‹∑≈≈–∂œ
+int attack(int k)//—°»°µ⁄i∏ˆ±¶æﬂΩ¯––“ª¥Œπ•ª˜,¥˝ÕÍ…∆,‘ˆº”±¶æﬂ≥‰ƒ‹Œ¥¬˙≤ªƒ‹∑≈≈–∂œ
 {
-	isBaojuReady();
-	if (baoju[k] != 1)//±¶æﬂŒ¥◊º±∏
+	if(k>10)
 	{
-		attack();
-		return 0;
-	}
-	getCardinfo();
-	sort(card + 1, card + 6, cmp);
-	moveto(attackPos);
-	leftclick();
-	Sleep(2000);
-	moveto(baojuPos[k]);
-	leftclick();
-	Sleep(1000);
-	for (int i = 1; i <= 2; i++)
-	{
-		moveto(cardPos[card[i].id]);
+		int k1 = k / 10;
+		int k2 = k % 10;
+		isBaojuReady();
+		if (baoju[k1] != 1)//±¶æﬂŒ¥◊º±∏
+		{
+			printf("±¶æﬂŒ¥◊º±∏");
+			attack();
+			return 0;
+		}
+		if (baoju[k2] != 1)//±¶æﬂŒ¥◊º±∏
+		{
+			printf("±¶æﬂŒ¥◊º±∏");
+			attack();
+			return 0;
+		}
+		getCardinfo();
+		sort(card + 1, card + 6, cmp);
+		moveto(attackPos);
+		leftclick();
+		Sleep(2000);
+		moveto(baojuPos[k1]);
 		leftclick();
 		Sleep(1000);
+		moveto(baojuPos[k2]);
+		leftclick();
+		Sleep(1000);
+		for (int i = 1; i < 2; i++)
+		{
+			moveto(cardPos[card[i].id]);
+			leftclick();
+			Sleep(1000);
+		}
+		delayBaojuTime();
+		printf("±¶æﬂ1Ω· ¯");
+		Sleep(2000);//¥˝–ﬁ∏ƒ
+		delayBaojuTime();
+		printf("±¶æﬂ2Ω· ¯");
+		return 0;
 	}
-	delayBaojuTime();
-	return 0;
+	else
+	{
+		isBaojuReady();
+		if (baoju[k] != 1)//±¶æﬂŒ¥◊º±∏
+		{
+			attack();
+			return 0;
+		}
+		getCardinfo();
+		sort(card + 1, card + 6, cmp);
+		moveto(attackPos);
+		leftclick();
+		Sleep(2000);
+		moveto(baojuPos[k]);
+		leftclick();
+		Sleep(1000);
+		for (int i = 1; i <= 2; i++)
+		{
+			moveto(cardPos[card[i].id]);
+			leftclick();
+			Sleep(1000);
+		}
+		delayBaojuTime();
+		return 0;
+	}
 }
 bool isNewBattle()//Õ®π˝∫⁄∆¡≈–∂œ «∑Ò“—æ≠¥ÚÕÍ’‚πÿ.
 {
@@ -708,81 +752,84 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//¥¶¿Ì’˚∏ˆ∏±±æ
 	/**/
 	Event(eventFlag);
 	/*---µ⁄“ªπÿ------*/
-	waitForAttack();
-	/* π”√ººƒ‹£¨∑≈±¶æﬂ*/
-	selectEnemy(info[1][14]);//—°‘Òµ–»ÀŒª÷√
 
-	// π”√ººƒ‹£¨À´÷ÿ—≠ª∑
-	for (int count = 0; count < 2; count++)
+	if (turns == 2 || turns == 3)
 	{
-		for (int i = 1; i < 10; i++)//9∏ˆººƒ‹—≠ª∑
+		waitForAttack();
+		/* π”√ººƒ‹£¨∑≈±¶æﬂ*/
+		selectEnemy(info[1][14]);//—°‘Òµ–»ÀŒª÷√
+
+		// π”√ººƒ‹£¨À´÷ÿ—≠ª∑
+		for (int count = 0; count < 2; count++)
 		{
-			if (info[1][i] < 10)//÷ª—≠ª∑“ª¥Œ
+			for (int i = 1; i < 10; i++)//9∏ˆººƒ‹—≠ª∑
 			{
-				if (count == 1) continue;//µ⁄∂˛¬÷—≠ª∑Ã¯π˝
+				if (info[1][i] < 10)//÷ª—≠ª∑“ª¥Œ
+				{
+					if (count == 1) continue;//µ⁄∂˛¬÷—≠ª∑Ã¯π˝
+					if (info[1][i] == 0)
+						useSkill(i);
+					else if (info[1][i] > 0)
+						useSkill(i, info[1][i]);
+				}
+				else
+				{
+					int round[5], cnt = 0, tmpInfo = info[1][i];
+					while (tmpInfo)//◊÷∑˚∑÷∏Ó
+					{
+						round[cnt++] = tmpInfo % 10;
+						tmpInfo /= 10;
+					}
+					if (round[1 - count] == 0)
+					{
+						useSkill(i);
+					}
+					else if (round[1 - count] > 0)
+					{
+						if (round[1 - count] >= 4)
+							continue;
+						useSkill(i, round[1 - count]);
+					}
+				}
+
+			}
+			if (count == 1) break;
+			for (int i = 11; i <= 13; i++)//”˘÷˜ººƒ‹—≠ª∑
+			{
 				if (info[1][i] == 0)
-					useSkill(i);
+					useMasterSkill(i - 10);
 				else if (info[1][i] > 0)
-					useSkill(i, info[1][i]);
+					useMasterSkill(i - 10, info[1][i]);
 			}
-			else
+		}
+		if (info[1][10] > 0)
+			attack(info[1][10]);
+		else attack();
+		/* π”√ººƒ‹,∑≈±¶æﬂ*/
+
+		while (!isNewBattle())//≈–∂œ”–√ª”–¥ÚÕÍ, «∑Ò–Ë“™∆Ωø≥
+		{
+			cout << "µ⁄“ªπÿµ»¥˝" << endl;
+			Sleep(200);
+			if (isAttackButton())
 			{
-				int round[5], cnt = 0, tmpInfo = info[1][i];
-				while (tmpInfo)//◊÷∑˚∑÷∏Ó
-				{
-					round[cnt++] = tmpInfo % 10;
-					tmpInfo /= 10;
-				}
-				if (round[1 - count] == 0)
-				{
-					useSkill(i);
-				}
-				else if (round[1 - count] > 0)
-				{
-					if (round[1 - count] >= 4)
-						continue;
-					useSkill(i, round[1 - count]);
-				}
+				flag1 = 1;
+				break;
 			}
-			
 		}
-		if (count == 1) break;
-		for (int i = 11; i <= 13; i++)//”˘÷˜ººƒ‹—≠ª∑
+		if (flag1)
 		{
-			if (info[1][i] == 0)
-				useMasterSkill(i - 10);
-			else if (info[1][i] > 0)
-				useMasterSkill(i - 10, info[1][i]);
+			while (isAttackButton())
+			{
+				cout << "µ⁄“ªπÿ∆Ωø≥" << endl;
+				attack();
+				while (!isNewBattle() && !isAttackButton())//≈–∂œ”–√ª”–¥ÚÕÍ
+					Sleep(200);
+			}
 		}
+		cout << "µ⁄“ªπÿΩ· ¯" << endl;
+		/*--------------------------------------------------------------------------------*/
 	}
-	if (info[1][10] > 0)
-		attack(info[1][10]);
-	else attack();
-	/* π”√ººƒ‹,∑≈±¶æﬂ*/
-
-	while (!isNewBattle())//≈–∂œ”–√ª”–¥ÚÕÍ, «∑Ò–Ë“™∆Ωø≥
-	{
-		cout << "µ⁄“ªπÿµ»¥˝" << endl;
-		Sleep(200);
-		if (isAttackButton())
-		{
-			flag1 = 1;
-			break;
-		}
-	}
-	if (flag1)
-	{
-		while (isAttackButton())
-		{
-			cout << "µ⁄“ªπÿ∆Ωø≥" << endl;
-			attack();
-			while (!isNewBattle() && !isAttackButton())//≈–∂œ”–√ª”–¥ÚÕÍ
-				Sleep(200);
-		}
-	}
-	cout << "µ⁄“ªπÿΩ· ¯" << endl;
-	/*--------------------------------------------------------------------------------*/
-
 	/*---µ⁄∂˛πÿ------*/
 	if (turns == 3)
 	{
