@@ -377,7 +377,7 @@ void delayBaojuTime()//隔开宝具时间
 		cout << cl.R << " " << cl.G << " " << cl.B << endl;
 		ColorRGB bronze, silver, gold;
 		bronze.R =127 ; bronze.G = 93; bronze.B=60;
-		silver.R = 116; silver.G = 150; silver.B =182;
+		silver.R = 103; silver.G = 137; silver.B =171;
 		gold.R = 211; gold.G = 139; gold.B = 106;
 		cout << "跳过宝具" << endl;
 		if (abs(cl.R - gold.R) <= 5 && abs(cl.G -gold.G) <= 5 && abs(cl.B - gold.B) <= 5)
@@ -1072,4 +1072,11 @@ void FriendlyPool(int num)
 		leftclick();
 		Sleep(1000);
 	}
+}
+
+void check()//用来检测特定点颜色值
+{
+	printf("check\n");
+	printf("宝具颜色点\n");
+	delayBaojuTime();
 }

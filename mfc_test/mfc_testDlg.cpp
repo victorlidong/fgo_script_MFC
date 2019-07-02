@@ -82,6 +82,7 @@ BEGIN_MESSAGE_MAP(Cmfc_testDlg, CDialogEx)
 //ON_WM_CHAR()
 ON_EN_CHANGE(IDC_EDIT48, &Cmfc_testDlg::OnEnChangeEdit48)
 ON_BN_CLICKED(IDOK6, &Cmfc_testDlg::OnBnClickedOk6)
+ON_BN_CLICKED(IDOK7, &Cmfc_testDlg::OnBnClickedOk7)
 END_MESSAGE_MAP()
 
 
@@ -628,4 +629,12 @@ void Cmfc_testDlg::OnBnClickedOk6()//抽花瓣
 			}
 		}
 	}
+}
+
+
+void Cmfc_testDlg::OnBnClickedOk7()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	init();
+	check();
 }
