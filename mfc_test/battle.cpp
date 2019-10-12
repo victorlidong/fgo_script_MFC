@@ -414,13 +414,13 @@ int attack(int k)//选取第i个宝具进行一次攻击,待完善,增加宝具充能未满不能放判断
 		if (baoju[k1] != 1)//宝具未准备
 		{
 			printf("宝具未准备");
-			attack();
+			attack(k2);
 			return 0;
 		}
 		if (baoju[k2] != 1)//宝具未准备
 		{
 			printf("宝具未准备");
-			attack();
+			attack(k1);
 			return 0;
 		}
 		getCardinfo();
@@ -492,8 +492,7 @@ bool isNewBattle()//通过黑屏判断是否已经打完这关.
 bool isAllBattleEnd()//通过黑屏判断是否已经打完
 {
 	POINT tmp;
-	tmp.x = 65; tmp.y = 176;
-	//tmp.x = 730; tmp.y = 47;
+	tmp.x = 729; tmp.y = 51;
 	ColorRGB color = getRGB(getColor(tmp));
 	if (color.R == 0 && color.G == 0 && color.B == 0)
 	{
@@ -512,8 +511,8 @@ bool isEnd()//判断是否出现了战斗结束
 	ColorRGB k = getRGB(getColor(tmp));
 	cout << k.R << " " << k.G << " " << k.B << endl;
 	ColorRGB tmpcl;
-	tmpcl.R = 231; tmpcl.G = 181; tmpcl.B = 45;
-	if (abs(k.R - tmpcl.R) <= 0 && abs(k.G - tmpcl.G) <= 0 && abs(k.B - tmpcl.B) <= 0)
+	tmpcl.R = 233; tmpcl.G = 183; tmpcl.B = 35;
+	if (abs(k.R - tmpcl.R) <= 1 && abs(k.G - tmpcl.G) <= 1 && abs(k.B - tmpcl.B) <= 1)
 		return true;
 	return false;
 }
@@ -611,8 +610,10 @@ void battleEnd()//出现了战斗结束之后应该做的
 		leftclick();
 		Sleep(500);
 	}
+	Sleep(5000);
 	while (isAllBattleEnd())//一直等到黑屏结束
-		Sleep(200);
+		Sleep(1000);
+	Sleep(2000);
 }
 void eatApple(int appFlag)
 {
@@ -648,10 +649,10 @@ void eatApple(int appFlag)
 void startBattle(int appFlag)//开始战斗
 {
 	startPos.x = 728;
-	startPos.y = 151;
+	startPos.y = 175;
 	moveto(startPos);
 	leftclick();
-	Sleep(2000);
+	Sleep(4000);
 	/*判断是否吃苹果*/
 	POINT tmp;
 	tmp.x = 803; tmp.y = 209;
@@ -1077,6 +1078,6 @@ void FriendlyPool(int num)
 void check()//用来检测特定点颜色值
 {
 	printf("check\n");
-	printf("宝具颜色点\n");
-	delayBaojuTime();
+	
+	isEnd();
 }
