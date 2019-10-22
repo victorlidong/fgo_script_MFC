@@ -586,10 +586,11 @@ UINT MfcThreadProc(LPVOID lpParam)
 	while (1)
 	{
 		ColorRGB cl = getRGB(getColor(dec));
-		cout << cl.R << cl.G << cl.B << endl;
+		cout << cl.R <<" "<< cl.G <<" "<< cl.B << endl;
 
-		if ((cl.R - 10) <= 5 && (cl.G - 79) <= 5 && (cl.B - 112) <= 5)
+		if (abs(cl.R - 10) <= 1 && abs(cl.G - 79) <= 1 && abs(cl.B - 112) <= 1)
 		{
+			cout <<"get "<< cl.R << " " << cl.G << " " << cl.B << endl;
 			moveto(reStart);
 			Sleep(1000);
 			leftclick();
