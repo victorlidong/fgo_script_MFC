@@ -6,9 +6,9 @@
 #include <stdio.h>  
 #include <string.h>  
 #include <iostream>  
-#include<string>
-#include"resource.h"
-#include<algorithm>
+#include <string>
+#include "resource.h"
+#include <algorithm>
 #include <windows.h>
 #include <mmsystem.h>
 #pragma comment(lib, "WINMM.LIB")
@@ -59,10 +59,12 @@ void init()//初始化
 	LPCWSTR a;
 	hq = FindWindowA(NULL,"夜神模拟器");//获得窗口句柄
 	hdc = ::GetDC(NULL);
-	RECT rect;
+	RECT rect, clientRect;
 	GetWindowRect(hq, &rect);
 	Window_X = rect.left;
 	Window_Y = rect.top;
+	
+	
 	std::cout << Window_X << " " << Window_Y << std::endl;
 	skill[1].x = 57;  skill[1].y = 471;
 	skill[2].x = 126;  skill[2].y = 471;
