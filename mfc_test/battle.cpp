@@ -44,6 +44,7 @@ POINT startPos;//打的本的位置，这个会变,根据要打哪个本而定
 POINT skillCancelPos;
 HWND hq;
 HDC hdc;
+int clinetWindow_X, clinetWindow_Y;
 struct CARD
 {
 	int id;
@@ -63,6 +64,8 @@ void init()//初始化
 	GetWindowRect(hq, &rect);
 	Window_X = rect.left;
 	Window_Y = rect.top;
+	clinetWindow_X = Window_X + 2;
+	clinetWindow_Y= Window_Y+36;
 	
 	
 	std::cout << Window_X << " " << Window_Y << std::endl;
