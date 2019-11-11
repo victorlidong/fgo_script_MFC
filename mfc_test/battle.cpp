@@ -40,7 +40,7 @@ POINT bronzeApplePos;//铜苹果
 POINT stoneApplePos;//圣晶石位置
 POINT yesPos;//吃苹果是确定键位置
 POINT startPos;//打的本的位置，这个会变,根据要打哪个本而定
-
+POINT friendPos;//关卡结束出现好友添加按钮的否定位置
 POINT skillCancelPos;
 HWND hq;
 HDC hdc;
@@ -135,6 +135,8 @@ void init()//初始化
 	yesPos.x = 635; yesPos.y = 455;
 
 	skillCancelPos.x = 263; skillCancelPos.y = 356;
+
+	friendPos.x = 196; friendPos.y = 497;
 }
 ColorRGB getRGB(COLORREF color)//得到rgb表示的颜色值
 {
@@ -381,9 +383,9 @@ void delayBaojuTime()//隔开宝具时间
 		ColorRGB cl = getRGB(getColor(dectNode));
 		cout << cl.R << " " << cl.G << " " << cl.B << endl;
 		ColorRGB bronze, silver, gold;
-		bronze.R =127 ; bronze.G = 93; bronze.B=60;
-		silver.R = 103; silver.G = 137; silver.B =171;
-		gold.R = 211; gold.G = 139; gold.B = 106;
+		bronze.R =135 ; bronze.G = 94; bronze.B=62;
+		silver.R = 122; silver.G = 141; silver.B =146;
+		gold.R = 218; gold.G = 134; gold.B = 120;
 		cout << "跳过宝具" << endl;
 		if (abs(cl.R - gold.R) <= 5 && abs(cl.G -gold.G) <= 5 && abs(cl.B - gold.B) <= 5)
 			break;
@@ -485,10 +487,11 @@ bool isNewBattle()//通过黑屏判断是否已经打完这关.
 	//tmp.x = 730; tmp.y = 47;
 	tmp.x = 680; tmp.y = 108;
 	ColorRGB color = getRGB(getColor(tmp));
+	cout << "newBettle判断" << endl;
+	cout << color.R << " " << color.G << " " << color.B << endl;
 	if (color.R == 0 && color.G == 0 && color.B == 0)
 	{
-		cout << "newBettle判断" << endl;
-		cout << color.R << " " << color.G << " " << color.B << endl;
+		cout << "newBettle判断==true" << endl;
 		return true;
 	}
 	cout << "newBettle判断==false" << endl;
@@ -497,12 +500,14 @@ bool isNewBattle()//通过黑屏判断是否已经打完这关.
 bool isAllBattleEnd()//通过黑屏判断是否已经打完
 {
 	POINT tmp;
-	tmp.x = 729; tmp.y = 51;
+//	tmp.x = 729; tmp.y = 51;
+	tmp.x = 49; tmp.y = 530;
 	ColorRGB color = getRGB(getColor(tmp));
+	cout << "newBettle判断" << endl;
+	cout << color.R << " " << color.G << " " << color.B << endl;
 	if (color.R == 0 && color.G == 0 && color.B == 0)
 	{
-		cout << "newBettle判断" << endl;
-		cout << color.R << " " << color.G << " " << color.B << endl;
+		cout << "newBettle判断==true" << endl;
 		return true;
 	}
 	cout << "newBettle判断==false" << endl;
@@ -603,6 +608,14 @@ void battleEnd()//出现了战斗结束之后应该做的
 	{
 		moveto(battleEndPos);
 		ColorRGB tmp = getRGB(getColor(ClosePos));
+		ColorRGB tmp2 = getRGB(getColor(friendPos));
+		if (abs(tmp2.R - 213) < 3 && abs(tmp2.G - 213) < 3 && abs(tmp2.B - 213) < 3)//判断是否添加好友
+		{
+			cout << "取消添加好友" << endl;
+			moveto(friendPos);
+			leftclick();
+			Sleep(1000);
+		}
 		if (abs(tmp.R-242)<5&&abs(tmp.G-242)<5&&abs(tmp.B-242)<5)//判断是否掉落礼装
 		{
 			cout << "礼装掉落" << endl;
@@ -615,7 +628,7 @@ void battleEnd()//出现了战斗结束之后应该做的
 		leftclick();
 		Sleep(500);
 	}
-	Sleep(5000);
+	Sleep(3000);
 	while (isAllBattleEnd())//一直等到黑屏结束
 		Sleep(1000);
 	Sleep(2000);
@@ -1084,5 +1097,5 @@ void check()//用来检测特定点颜色值
 {
 	printf("check\n");
 	
-	isEnd();
+	isAllBattleEnd();
 }
