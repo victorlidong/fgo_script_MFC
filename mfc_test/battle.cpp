@@ -664,6 +664,30 @@ void eatApple(int appFlag)
 	Sleep(2000);
 	*/
 }
+void refreshFriendAndSelect()//刷新好友并且选择
+{
+	POINT fPos, yesAndClosePos;//刷新位置,确定按钮，关闭按钮位置（同一个）
+	fPos.x = 629;
+	fPos.y = 137;
+	yesAndClosePos.x = 544;
+	yesAndClosePos.y = 458;
+	POINT tmp;//检测有没有符合设定条件的好友
+	tmp.x = 349; tmp.y = 373;
+	ColorRGB cl;
+	do {
+		moveto(fPos);
+		leftclick();
+		Sleep(1000);
+		moveto(yesAndClosePos);
+		leftclick();
+		Sleep(4000);
+		cl = getRGB(getColor(tmp));
+	} while ((abs(cl.R - 255) <= 1 && abs(cl.G - 255) <= 1 && abs(cl.B - 255) <= 1));
+	moveto(helpPos);
+	leftclick();
+	Sleep(2000);
+
+}
 void startBattle(int appFlag)//开始战斗
 {
 	startPos.x = 728;
@@ -681,23 +705,12 @@ void startBattle(int appFlag)//开始战斗
 		eatApple(appFlag);
 	}
 	/*-------*/
-	POINT fPos;//刷新位置
-	fPos.x = 629;
-	fPos.y = 137;
-	moveto(fPos);
-	leftclick();
-	Sleep(1000);
-	moveto(yesPos);
-	leftclick();
-	Sleep(3000);
-
-	moveto(helpPos);
-	leftclick();
-	Sleep(2000);
+	refreshFriendAndSelect();
 	moveto(startBattlePos);
 	leftclick();
 	Sleep(2000);
 }
+
 void Event(int flag)//如果有活动，-1不执行操作，0，不选择模具，1 2 3 4 选择第几个
 {
 	POINT bt1, bt2, bt3, btNotUse;
@@ -1097,5 +1110,5 @@ void check()//用来检测特定点颜色值
 {
 	printf("check\n");
 	
-	isAllBattleEnd();
+	refreshFriendAndSelect();
 }
