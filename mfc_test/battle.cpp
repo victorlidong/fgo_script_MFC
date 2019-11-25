@@ -656,6 +656,7 @@ void eatApple(int appFlag)
 	leftclick();
 	Sleep(2000);
 	moveto(yesPos);
+	Sleep(1000);
 	leftclick();
 	Sleep(3000);
 	/*
