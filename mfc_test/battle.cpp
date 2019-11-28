@@ -654,9 +654,8 @@ void eatApple(int appFlag)
 		moveto(stoneApplePos);
 	}
 	leftclick();
-	Sleep(2000);
 	moveto(yesPos);
-	Sleep(1000);
+	Sleep(3000);
 	leftclick();
 	Sleep(3000);
 	/*
