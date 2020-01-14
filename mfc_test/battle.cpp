@@ -197,6 +197,16 @@ void leftdown()//°´×¡Êó±êÏòÉÏÒÆ¶¯Èı¸ö¹·Á¸µÄ´¹Ö±¾àÀë
 	}
 	mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 }
+bool ifSkillReady()
+{
+	POINT tag;
+	tag.x = 584;
+	tag.y = 357;
+	ColorRGB tmp = getRGB(getColor(tag));
+	if (abs(tmp.R - 108) <= 2 && abs(tmp.G - 108) <= 2 && abs(tmp.B - 108) <= 2)
+		return false;
+	return true;
+}
 void useSkill(int k)//Ê¹ÓÃµÚk¸ö¼¼ÄÜ
 {
 	moveto(skill[k]);
@@ -204,15 +214,16 @@ void useSkill(int k)//Ê¹ÓÃµÚk¸ö¼¼ÄÜ
 	Sleep(1000);
 	/* Èç¹û¼¼ÄÜcdÃ»ºÃ*/
 	ColorRGB tmp = getRGB(getColor(skillCancelPos));
-	if (abs(tmp.R - 215) <= 5 && abs(tmp.G - 215) <= 5 && abs(tmp.B - 215) <= 5)
+	if (!ifSkillReady())
 	{
+		printf("¼¼ÄÜcdÎ´ºÃ");
 		moveto(skillCancelPos);
 		leftclick();
 		Sleep(1000);
 		return;
 	}
 
-	Sleep(3000);
+	Sleep(4000);
 }
 void useSkill(int k, int i)//Ê¹ÓÃµÚk¸ö¼¼ÄÜ¶ÔµÚi¸öÈË
 {
@@ -221,8 +232,9 @@ void useSkill(int k, int i)//Ê¹ÓÃµÚk¸ö¼¼ÄÜ¶ÔµÚi¸öÈË
 	Sleep(1000);
 	/*Èç¹û¼¼ÄÜcdÃ»ºÃ*/
 	ColorRGB tmp = getRGB(getColor(skillCancelPos));
-	if (abs(tmp.R - 215) <= 5 && abs(tmp.G - 215) <= 5 && abs(tmp.B - 215) <= 5)
+	if (!ifSkillReady())
 	{
+		printf("¼¼ÄÜcdÎ´ºÃ");
 		moveto(skillCancelPos);
 		leftclick();
 		Sleep(1000);
@@ -239,7 +251,7 @@ void useMasterSkill(int k)//Ê¹ÓÃµÚk¸öÓùÖ÷¼¼ÄÜ
 	Sleep(1000);
 	moveto(Masterskillpos[k]);
 	leftclick();
-	Sleep(4000);
+	Sleep(5000);
 }
 void useMasterSkill(int k, int i)//Ê¹ÓÃµÚk¸öÓùÖ÷¼¼ÄÜ¶ÔµÚi¸öÈË£¬µ±i>10Ê±£¬ÊÓÎª»»ÈËÀñ×° 14¼´1 4¶Ôµ÷
 {
@@ -282,7 +294,7 @@ void useMasterSkill(int k, int i)//Ê¹ÓÃµÚk¸öÓùÖ÷¼¼ÄÜ¶ÔµÚi¸öÈË£¬µ±i>10Ê±£¬ÊÓÎª»»È
 		Sleep(200);
 		moveto(personPos[i]);
 		leftclick();
-		Sleep(4000);
+		Sleep(6000);
 	}
 }
 void getCardinfo()//»ñµÃÃ¿ÕÅ¿¨µÄÀàĞÍ
@@ -401,6 +413,7 @@ int attack()//½øĞĞ³£¹æÑ¡È¡ÈıÕÅ¿¨½øĞĞÒ»´Î¹¥»÷
 	getCardinfo();
 	sort(card + 1, card + 6, cmp);
 	moveto(attackPos);
+	Sleep(1000);
 	leftclick();
 	Sleep(2000);
 	for (int i = 1; i <= 3; i++)
@@ -411,7 +424,7 @@ int attack()//½øĞĞ³£¹æÑ¡È¡ÈıÕÅ¿¨½øĞĞÒ»´Î¹¥»÷
 	}
 	return 0;
 }
-int attack(int k)//Ñ¡È¡µÚi¸ö±¦¾ß½øĞĞÒ»´Î¹¥»÷,´ıÍêÉÆ,Ôö¼Ó±¦¾ß³äÄÜÎ´Âú²»ÄÜ·ÅÅĞ¶Ï
+int attack(int k)//Ñ¡È¡µÚi¸ö±¦¾ß½øĞĞÒ»´Î¹¥»÷
 {
 	if(k>10)
 	{
@@ -433,6 +446,7 @@ int attack(int k)//Ñ¡È¡µÚi¸ö±¦¾ß½øĞĞÒ»´Î¹¥»÷,´ıÍêÉÆ,Ôö¼Ó±¦¾ß³äÄÜÎ´Âú²»ÄÜ·ÅÅĞ¶Ï
 		getCardinfo();
 		sort(card + 1, card + 6, cmp);
 		moveto(attackPos);
+		Sleep(1000);
 		leftclick();
 		Sleep(2000);
 		moveto(baojuPos[k1]);
@@ -465,6 +479,7 @@ int attack(int k)//Ñ¡È¡µÚi¸ö±¦¾ß½øĞĞÒ»´Î¹¥»÷,´ıÍêÉÆ,Ôö¼Ó±¦¾ß³äÄÜÎ´Âú²»ÄÜ·ÅÅĞ¶Ï
 		getCardinfo();
 		sort(card + 1, card + 6, cmp);
 		moveto(attackPos);
+		Sleep(1000);
 		leftclick();
 		Sleep(2000);
 		moveto(baojuPos[k]);
@@ -1110,5 +1125,5 @@ void check()//ÓÃÀ´¼ì²âÌØ¶¨µãÑÕÉ«Öµ
 {
 	printf("check\n");
 	
-	refreshFriendAndSelect();
+	useSkill(1);
 }
