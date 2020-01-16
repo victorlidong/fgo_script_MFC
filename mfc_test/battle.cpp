@@ -64,8 +64,8 @@ void init()//初始化
 	GetWindowRect(hq, &rect);
 	Window_X = rect.left;
 	Window_Y = rect.top;
-	clinetWindow_X = Window_X + 2;
-	clinetWindow_Y= Window_Y+36;
+	//clinetWindow_X = Window_X + 2;
+	//clinetWindow_Y= Window_Y+36;
 	
 	
 	std::cout << Window_X << " " << Window_Y << std::endl;
@@ -790,9 +790,26 @@ void selectEnemy(int i)
 	leftclick();
 	Sleep(1000);
 }
-void onBattle(int info[4][20],int eventFlag,int turns,int appFlag)//处理整个副本的流程
+
+void windowCorrect(int x, int y)
 {
+	if (x == -1 || y == -1)
+		return;
+	else
+	{
+		//clinetWindow_X = Window_X + 2;
+		//clinetWindow_Y= Window_Y+36;
+
+		clinetWindow_X = Window_X + x;
+		clinetWindow_Y = Window_Y + y;
+		Window_X = clinetWindow_X - 2;
+		Window_Y = clinetWindow_Y - 36;
+	}
 	
+}
+void onBattle(int info[4][20],int eventFlag,int turns,int appFlag,int x,int y)//处理整个副本的流程
+{
+	windowCorrect(x, y);
 	cout << Window_X << " " << Window_Y << endl;
 	int flag1 = 0, flag2 = 0, flag3 = 0;
 	startBattle(appFlag);

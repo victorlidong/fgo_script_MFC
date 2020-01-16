@@ -1,4 +1,4 @@
-void onBattle(int info[4][20],int eventFlag,int turns,int appFlag);
+void onBattle(int info[4][20],int eventFlag,int turns,int appFlag,int x,int y);
 void init();
 void moveto(int x, int y);
 void leftdown();

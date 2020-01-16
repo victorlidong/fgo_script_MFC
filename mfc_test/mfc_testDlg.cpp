@@ -83,6 +83,7 @@ BEGIN_MESSAGE_MAP(Cmfc_testDlg, CDialogEx)
 ON_EN_CHANGE(IDC_EDIT48, &Cmfc_testDlg::OnEnChangeEdit48)
 ON_BN_CLICKED(IDOK6, &Cmfc_testDlg::OnBnClickedOk6)
 ON_BN_CLICKED(IDOK7, &Cmfc_testDlg::OnBnClickedOk7)
+ON_EN_CHANGE(IDC_EDIT52, &Cmfc_testDlg::OnEnChangeEdit52)
 END_MESSAGE_MAP()
 
 
@@ -211,7 +212,7 @@ CString IntToCstring(int a)
 		return s;
 	}
 }
-void Cmfc_testDlg::getInfo(int Info[4][20], int &eventFlag, int &turns, int &appFlag,int &times)
+void Cmfc_testDlg::getInfo(int Info[4][20], int &eventFlag, int &turns, int &appFlag,int &times,int &x,int &y)
 {
 	CString tmp;
 	GetDlgItem(IDC_EDIT1)->GetWindowText(tmp);
@@ -354,6 +355,10 @@ void Cmfc_testDlg::getInfo(int Info[4][20], int &eventFlag, int &turns, int &app
 	GetDlgItem(IDC_EDIT43)->GetWindowText(tmp);
 	appFlag = __ttoi(tmp);
 
+	GetDlgItem(IDC_EDIT52)->GetWindowText(tmp);
+	x= __ttoi(tmp);
+	GetDlgItem(IDC_EDIT51)->GetWindowText(tmp);
+	y = __ttoi(tmp);
 }
 
 void Cmfc_testDlg::OnBnClickedOk()
@@ -364,14 +369,15 @@ void Cmfc_testDlg::OnBnClickedOk()
 	int eventFlag;//活动需要在进入副本时选择加成药品时确定
 	int turns;//回合数
 	int appFlag;//苹果flag
-	getInfo(Info, eventFlag, turns, appFlag,times);
+	int x, y;//窗口差值
+	getInfo(Info, eventFlag, turns, appFlag,times,x,y);
 	init();
 	//PlaySound(LPWSTR(IDR_WAVE3), GetModuleHandle(NULL), SND_RESOURCE | SND_ASYNC);
 	while (times--)
 	{
 		SetDlgItemText(IDC_EDIT31, IntToCstring(times));
 		Sleep(500);
-		onBattle(Info,eventFlag,turns,appFlag);
+		onBattle(Info,eventFlag,turns,appFlag,x,y);
 	}
 	
 
@@ -416,7 +422,8 @@ void Cmfc_testDlg::OnBnClickedOk3()//读取配置文件
 		int eventFlag;//活动需要在进入副本时选择加成药品时确定
 		int turns;//回合数
 		int appFlag;//苹果flag
-		getInfo(Info, eventFlag, turns, appFlag, times);
+		int x, y;
+		getInfo(Info, eventFlag, turns, appFlag, times,x,y);
 
 		for (int i = 1; i <= 3; i++)
 		{
@@ -516,7 +523,8 @@ void Cmfc_testDlg::OnBnClickedOk4()//保存配置文件
 		int eventFlag;//活动需要在进入副本时选择加成药品时确定
 		int turns;//回合数
 		int appFlag;//苹果flag
-		getInfo(Info, eventFlag, turns, appFlag, times);
+		int x, y;
+		getInfo(Info, eventFlag, turns, appFlag, times,x,y);
 		
 		for (int i = 1; i <= 3; i++)
 		{
@@ -638,4 +646,15 @@ void Cmfc_testDlg::OnBnClickedOk7()
 	// TODO: 在此添加控件通知处理程序代码
 	init();
 	check();
+}
+
+
+void Cmfc_testDlg::OnEnChangeEdit52()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，它将不
+	// 发送此通知，除非重写 CDialogEx::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
 }

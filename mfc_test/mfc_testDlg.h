@@ -35,10 +35,11 @@ public:
 	afx_msg void OnBnClickedOk2();
 	afx_msg void OnBnClickedOk3();
 	afx_msg void OnBnClickedOk4();
-	afx_msg void getInfo(int Info[4][20], int &eventFlag, int &turns, int &appFlag, int &times);
+	afx_msg void getInfo(int Info[4][20], int &eventFlag, int &turns, int &appFlag, int &times,int &x,int &y);
 	afx_msg void OnBnClickedOk5();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnEnChangeEdit48();
 	afx_msg void OnBnClickedOk6();
 	afx_msg void OnBnClickedOk7();
+	afx_msg void OnEnChangeEdit52();
 };
