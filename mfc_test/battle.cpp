@@ -55,10 +55,18 @@ struct ColorRGB
 {
 	int R, G, B;
 };
-void init()//初始化
+void init(CString windowName=_T("夜神模拟器"))//初始化
 {
+	CString tmp;
+	if (windowName[0] == '\0')
+		tmp = _T("夜神模拟器");
+	else tmp = windowName;
+	
+	CStringA tmpA(tmp);
+	LPCSTR newWindowName = tmpA;
+
 	LPCWSTR a;
-	hq = FindWindowA(NULL,"夜神模拟器");//获得窗口句柄
+	hq = FindWindowA(NULL, newWindowName);//获得窗口句柄
 	hdc = ::GetDC(NULL);
 	RECT rect, clientRect;
 	GetWindowRect(hq, &rect);
@@ -1066,7 +1074,7 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag,int x,int y)//
 	cout << "第三关结束" << endl;
 	battleEnd();
 }
-void selectFire(int num)
+void selectFire(int num)//有bug，
 {
 	init();
 	int row_tmp = num % 15 == 0 ? num / 15 : num / 15 + 1;
@@ -1120,9 +1128,9 @@ void selectFire(int num)
 		}
 	}
 }
-void FriendlyPool(int num)
+void FriendlyPool(int num, CString windowName = _T("夜神模拟器"))
 {
-	init();
+	init(windowName);
 	while (num--)
 	{
 		moveto(619, 457);

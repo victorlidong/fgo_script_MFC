@@ -363,6 +363,10 @@ void Cmfc_testDlg::getInfo(int Info[4][20], int &eventFlag, int &turns, int &app
 
 void Cmfc_testDlg::OnBnClickedOk()
 {
+	CString windowName;
+	GetDlgItem(IDC_EDIT53)->GetWindowText(windowName);
+	
+
 	// TODO:  在此添加控件通知处理程序代码
 	int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
 	int times;//次数
@@ -371,7 +375,7 @@ void Cmfc_testDlg::OnBnClickedOk()
 	int appFlag;//苹果flag
 	int x, y;//窗口差值
 	getInfo(Info, eventFlag, turns, appFlag,times,x,y);
-	init();
+	init(windowName);
 	//PlaySound(LPWSTR(IDR_WAVE3), GetModuleHandle(NULL), SND_RESOURCE | SND_ASYNC);
 	while (times--)
 	{
@@ -552,7 +556,11 @@ void Cmfc_testDlg::OnBnClickedOk5()
 	CString tmp;
 	GetDlgItem(IDC_EDIT47)->GetWindowText(tmp);
 	int num = __ttoi(tmp);
-	FriendlyPool(num);
+
+
+	GetDlgItem(IDC_EDIT53)->GetWindowText(tmp);
+	
+	FriendlyPool(num, tmp);
 }
 
 
@@ -624,7 +632,12 @@ UINT MfcThreadProc(LPVOID lpParam)
 void Cmfc_testDlg::OnBnClickedOk6()//抽花瓣
 {
 	// TODO: 在此添加控件通知处理程序代码
-	init();
+
+	CString tmp;
+	GetDlgItem(IDC_EDIT53)->GetWindowText(tmp);
+
+	init(tmp);
+
 	CWinThread* MyThread=AfxBeginThread(MfcThreadProc,0);
 	bIsRunning = 1;
 	while (1)
@@ -644,7 +657,9 @@ void Cmfc_testDlg::OnBnClickedOk6()//抽花瓣
 void Cmfc_testDlg::OnBnClickedOk7()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	init();
+	CString tmp;
+	GetDlgItem(IDC_EDIT53)->GetWindowText(tmp);
+	init(tmp);
 	check();
 }
 
