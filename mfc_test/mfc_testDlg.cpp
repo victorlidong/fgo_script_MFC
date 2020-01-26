@@ -426,6 +426,7 @@ void Cmfc_testDlg::OnBnClickedOk3()//读取配置文件
 		int eventFlag;//活动需要在进入副本时选择加成药品时确定
 		int turns;//回合数
 		int appFlag;//苹果flag
+		string tmp_windowName;//窗口名称
 		int x, y;
 		getInfo(Info, eventFlag, turns, appFlag, times,x,y);
 
@@ -442,7 +443,14 @@ void Cmfc_testDlg::OnBnClickedOk3()//读取配置文件
 		in >> turns; in.get();
 		in >> appFlag; in.get();
 		in >> times; in.get();
+		in >> x; in.get();
+		in >> y; in.get();
+		in >> tmp_windowName; in.get();
 		in.close();
+
+		CA2T szr((tmp_windowName).c_str());
+		CString windowName = (LPCTSTR)szr;
+		
 
 		
 
@@ -495,6 +503,10 @@ void Cmfc_testDlg::OnBnClickedOk3()//读取配置文件
 		SetDlgItemText(IDC_EDIT41, IntToCstring(eventFlag));
 		SetDlgItemText(IDC_EDIT42, IntToCstring(turns));
 		SetDlgItemText(IDC_EDIT43, IntToCstring(appFlag));
+		
+		SetDlgItemText(IDC_EDIT52, IntToCstring(x));
+		SetDlgItemText(IDC_EDIT51, IntToCstring(y));
+		SetDlgItemText(IDC_EDIT53, windowName);
 
 		SetDlgItemText(IDC_EDIT48, IntToCstring(Info[1][14]));
 		SetDlgItemText(IDC_EDIT49, IntToCstring(Info[2][14]));
@@ -522,6 +534,10 @@ void Cmfc_testDlg::OnBnClickedOk4()//保存配置文件
 		fstream out;
 		out.open(strFilePath, ios::out);
 
+		CString windowName;//窗口名称
+		GetDlgItem(IDC_EDIT53)->GetWindowText(windowName);
+		string tmp_windowName = CT2A(windowName);
+
 		int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
 		int times;//次数
 		int eventFlag;//活动需要在进入副本时选择加成药品时确定
@@ -543,6 +559,9 @@ void Cmfc_testDlg::OnBnClickedOk4()//保存配置文件
 		out << turns << endl;
 		out << appFlag << endl;
 		out << times << endl;
+		out << x << endl;
+		out << y << endl;
+		out << tmp_windowName << endl;
 		out.close();
 	}
 
