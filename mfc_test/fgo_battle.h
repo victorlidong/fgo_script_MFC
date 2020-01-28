@@ -1,11 +1,11 @@
 void onBattle(int info[4][20],int eventFlag,int turns,int appFlag,int x,int y);
-void init(CString windowName = _T("夜神模拟器"));
+void init(int x, int y, CString windowName = _T("夜神模拟器"));//初始化
 void moveto(int x, int y);
 void leftdown();
 void leftclick();
 bool isEnd();
 void selectFire(int num);
-void FriendlyPool(int num, CString windowName = _T("夜神模拟器"));
+void FriendlyPool(int num);
 struct ColorRGB
 {
 	int R, G, B;

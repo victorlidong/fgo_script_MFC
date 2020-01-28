@@ -375,7 +375,7 @@ void Cmfc_testDlg::OnBnClickedOk()
 	int appFlag;//苹果flag
 	int x, y;//窗口差值
 	getInfo(Info, eventFlag, turns, appFlag,times,x,y);
-	init(windowName);
+	init(x,y, windowName);
 	//PlaySound(LPWSTR(IDR_WAVE3), GetModuleHandle(NULL), SND_RESOURCE | SND_ASYNC);
 	while (times--)
 	{
@@ -395,6 +395,20 @@ void Cmfc_testDlg::OnBnClickedOk2()
 	CString tmp;
 	GetDlgItem(IDC_EDIT46)->GetWindowText(tmp);
 	int num = __ttoi(tmp);//狗粮数目
+
+	CString windowName;
+	GetDlgItem(IDC_EDIT53)->GetWindowText(windowName);
+
+	// TODO:  在此添加控件通知处理程序代码
+	int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
+	int times;//次数
+	int eventFlag;//活动需要在进入副本时选择加成药品时确定
+	int turns;//回合数
+	int appFlag;//苹果flag
+	int x, y;//窗口差值
+	getInfo(Info, eventFlag, turns, appFlag, times, x, y);
+	init(x, y, windowName);
+
 	selectFire(num);
 
 }
@@ -577,9 +591,21 @@ void Cmfc_testDlg::OnBnClickedOk5()
 	int num = __ttoi(tmp);
 
 
-	GetDlgItem(IDC_EDIT53)->GetWindowText(tmp);
-	
-	FriendlyPool(num, tmp);
+	CString windowName;
+	GetDlgItem(IDC_EDIT53)->GetWindowText(windowName);
+
+	// TODO:  在此添加控件通知处理程序代码
+	int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
+	int times;//次数
+	int eventFlag;//活动需要在进入副本时选择加成药品时确定
+	int turns;//回合数
+	int appFlag;//苹果flag
+	int x, y;//窗口差值
+	getInfo(Info, eventFlag, turns, appFlag, times, x, y);
+	init(x, y, windowName);
+
+
+	FriendlyPool(num);
 }
 
 
@@ -654,8 +680,14 @@ void Cmfc_testDlg::OnBnClickedOk6()//抽花瓣
 
 	CString tmp;
 	GetDlgItem(IDC_EDIT53)->GetWindowText(tmp);
-
-	init(tmp);
+	int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
+	int times;//次数
+	int eventFlag;//活动需要在进入副本时选择加成药品时确定
+	int turns;//回合数
+	int appFlag;//苹果flag
+	int x, y;//窗口差值
+	getInfo(Info, eventFlag, turns, appFlag, times, x, y);
+	init(x, y, tmp);
 
 	CWinThread* MyThread=AfxBeginThread(MfcThreadProc,0);
 	bIsRunning = 1;
@@ -678,7 +710,14 @@ void Cmfc_testDlg::OnBnClickedOk7()
 	// TODO: 在此添加控件通知处理程序代码
 	CString tmp;
 	GetDlgItem(IDC_EDIT53)->GetWindowText(tmp);
-	init(tmp);
+	int  Info[4][20];//1-9为9个技能，10为宝具，11-13为御主技能
+	int times;//次数
+	int eventFlag;//活动需要在进入副本时选择加成药品时确定
+	int turns;//回合数
+	int appFlag;//苹果flag
+	int x, y;//窗口差值
+	getInfo(Info, eventFlag, turns, appFlag, times, x, y);
+	init(x, y, tmp);
 	check();
 }
 

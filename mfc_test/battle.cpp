@@ -55,7 +55,26 @@ struct ColorRGB
 {
 	int R, G, B;
 };
-void init(CString windowName=_T("夜神模拟器"))//初始化
+
+
+void windowCorrect(int x, int y)
+{
+	if (x == -1 || y == -1)
+		return;
+	else
+	{
+		//clinetWindow_X = Window_X + 2;
+		//clinetWindow_Y= Window_Y+36;
+
+		clinetWindow_X = Window_X + x;
+		clinetWindow_Y = Window_Y + y;
+		Window_X = clinetWindow_X - 2;
+		Window_Y = clinetWindow_Y - 36;
+	}
+
+}
+
+void init(int x,int y, CString windowName = _T("夜神模拟器"))//初始化
 {
 	CString tmp;
 	if (windowName[0] == '\0')
@@ -75,8 +94,12 @@ void init(CString windowName=_T("夜神模拟器"))//初始化
 	//clinetWindow_X = Window_X + 2;
 	//clinetWindow_Y= Window_Y+36;
 	
-	
+	cout << "not correct window" << endl;
 	std::cout << Window_X << " " << Window_Y << std::endl;
+	windowCorrect(x, y);
+	cout << "correctwindow" << endl;
+	cout << Window_X << " " << Window_Y << endl;
+
 	skill[1].x = 57;  skill[1].y = 471;
 	skill[2].x = 126;  skill[2].y = 471;
 	skill[3].x = 193;  skill[3].y = 471;
@@ -799,26 +822,10 @@ void selectEnemy(int i)
 	Sleep(1000);
 }
 
-void windowCorrect(int x, int y)
-{
-	if (x == -1 || y == -1)
-		return;
-	else
-	{
-		//clinetWindow_X = Window_X + 2;
-		//clinetWindow_Y= Window_Y+36;
 
-		clinetWindow_X = Window_X + x;
-		clinetWindow_Y = Window_Y + y;
-		Window_X = clinetWindow_X - 2;
-		Window_Y = clinetWindow_Y - 36;
-	}
-	
-}
 void onBattle(int info[4][20],int eventFlag,int turns,int appFlag,int x,int y)//处理整个副本的流程
 {
-	windowCorrect(x, y);
-	cout << Window_X << " " << Window_Y << endl;
+	
 	int flag1 = 0, flag2 = 0, flag3 = 0;
 	startBattle(appFlag);
 	/**/
@@ -1076,7 +1083,6 @@ void onBattle(int info[4][20],int eventFlag,int turns,int appFlag,int x,int y)//
 }
 void selectFire(int num)//有bug，
 {
-	init();
 	int row_tmp = num % 15 == 0 ? num / 15 : num / 15 + 1;
 	int left_num = num - (num / 15) * 15;
 	for (int k = 1; k <= row_tmp; k++)
@@ -1128,9 +1134,9 @@ void selectFire(int num)//有bug，
 		}
 	}
 }
-void FriendlyPool(int num, CString windowName = _T("夜神模拟器"))
+void FriendlyPool(int num)
 {
-	init(windowName);
+	
 	while (num--)
 	{
 		moveto(619, 457);
@@ -1138,7 +1144,7 @@ void FriendlyPool(int num, CString windowName = _T("夜神模拟器"))
 		Sleep(500);
 		leftclick();
 		moveto(566, 539);
-		Sleep(5000);
+		Sleep(8000);
 		leftclick();
 		Sleep(1500);
 		leftclick();
