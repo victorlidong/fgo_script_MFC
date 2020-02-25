@@ -379,9 +379,10 @@ void Cmfc_testDlg::OnBnClickedOk()
 	//PlaySound(LPWSTR(IDR_WAVE3), GetModuleHandle(NULL), SND_RESOURCE | SND_ASYNC);
 	while (times--)
 	{
-		SetDlgItemText(IDC_EDIT31, IntToCstring(times));
+		
 		Sleep(2000);
 		onBattle(Info,eventFlag,turns,appFlag,x,y);
+		Sleep(2000);
 	}
 	
 
