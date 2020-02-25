@@ -380,7 +380,7 @@ void Cmfc_testDlg::OnBnClickedOk()
 	while (times--)
 	{
 		SetDlgItemText(IDC_EDIT31, IntToCstring(times));
-		Sleep(500);
+		Sleep(2000);
 		onBattle(Info,eventFlag,turns,appFlag,x,y);
 	}
 	
