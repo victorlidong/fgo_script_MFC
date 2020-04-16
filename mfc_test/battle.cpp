@@ -426,9 +426,9 @@ void delayBaojuTime()//隔开宝具时间
 		ColorRGB cl = getRGB(getColor(dectNode));
 		cout << cl.R << " " << cl.G << " " << cl.B << endl;
 		ColorRGB bronze, silver, gold;
-		bronze.R =135 ; bronze.G = 94; bronze.B=62;
-		silver.R = 122; silver.G = 141; silver.B =146;
-		gold.R = 218; gold.G = 134; gold.B = 120;
+		bronze.R =141 ; bronze.G = 100; bronze.B=59;
+		silver.R = 116; silver.G = 150; silver.B =167;
+		gold.R = 229; gold.G = 181; gold.B = 148;
 		cout << "跳过宝具" << endl;
 		if (abs(cl.R - gold.R) <= 5 && abs(cl.G -gold.G) <= 5 && abs(cl.B - gold.B) <= 5)
 			break;
@@ -567,7 +567,7 @@ bool isEnd()//判断是否出现了战斗结束
 	ColorRGB k = getRGB(getColor(tmp));
 	cout << k.R << " " << k.G << " " << k.B << endl;
 	ColorRGB tmpcl;
-	tmpcl.R = 233; tmpcl.G = 183; tmpcl.B = 35;
+	tmpcl.R = 234; tmpcl.G = 192; tmpcl.B = 36;
 	if (abs(k.R - tmpcl.R) <= 1 && abs(k.G - tmpcl.G) <= 1 && abs(k.B - tmpcl.B) <= 1)
 		return true;
 	return false;
@@ -583,7 +583,7 @@ bool isAttackButton()//判断attack按钮是否出现
 	if (abs(tmp.R - 253) <= 1 && abs(tmp.G - 253) <= 1 && abs(tmp.B - 253) <= 1)
 		return true;
 		*/
-	if (abs(tmp.R - 0) <= 1 && abs(tmp.G - 234) <= 1 && abs(tmp.B - 250) <= 1)
+	if (abs(tmp.R - 0) <= 1 && abs(tmp.G - 237) <= 1 && abs(tmp.B - 253) <= 1)
 		return true;
 	return false;
 }
@@ -1156,5 +1156,5 @@ void check()//用来检测特定点颜色值
 {
 	printf("check\n");
 	
-	useSkill(1);
+	isEnd();
 }
